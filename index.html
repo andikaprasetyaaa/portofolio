@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andika Prasetya — AI & Data Engineer Portfolio</title>
+    <meta name="description" content="I forge AI systems — from raw data to deployed intelligence. Personal portfolio of I Putu Andika Prasetya.">
+    
+    <!-- Open Graph / Twitter Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Andika Prasetya — Portfolio">
+    <meta property="og:description" content="AI Engineer | Machine Learning & Data Engineer">
+    
+    <!-- Retro Pixel Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon (Terraria Pixel Heart) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path fill='%23e8262d' stroke='%23ffd24a' stroke-width='0.5' d='M2 1h2v1h1v1h1V2h2V1h2v3h-1v2h-1v1h-1v1H5v1H4V8H3V7H2V6H1V4h1z'/></svg>">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Persistent Terraria HUD (Directly visible without any Enter World blocker!) -->
+    <header id="hud" class="hud" aria-label="Game HUD">
+        <!-- Top Left: Life Hearts & Depth Meter -->
+        <div class="hud-top-left">
+            <div class="life-bar-label">LIFE: 500 / 500</div>
+            <div class="hearts" title="Player Health">
+                <div class="heart full"></div>
+                <div class="heart full"></div>
+                <div class="heart full"></div>
+                <div class="heart full"></div>
+                <div class="heart full"></div>
+            </div>
+            <div class="depth-meter">Depth: Surface (120ft)</div>
+        </div>
+        
+        <!-- Top Right: Terraria Mana Stars & Sound Controls -->
+        <div class="hud-top-right">
+            <div class="hud-controls">
+                <button id="toggle-music" class="icon-button" title="Toggle Terraria Soundtrack" aria-label="Toggle Music">🔊</button>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.35" title="Volume" aria-label="Volume">
+                <button id="toggle-day-night" class="icon-button" title="Toggle Day/Night Cycle" aria-label="Toggle Day/Night">🌙</button>
+            </div>
+            <div class="mana-container" title="Mana Stars">
+                <div class="mana-label">MANA</div>
+                <div class="mana-star">★</div>
+                <div class="mana-star">★</div>
+                <div class="mana-star">★</div>
+                <div class="mana-star">★</div>
+                <div class="mana-star">★</div>
+            </div>
+        </div>
+        
+        <!-- Bottom: Authentic 10-Slot Terraria Hotbar -->
+        <nav class="hotbar" aria-label="Terraria Hotbar Navigation">
+            <button class="slot active" data-slot="0" title="[1] Surface / Home">
+                <span class="slot-num">1</span>
+                <span class="slot-emoji">🏠</span>
+                <span class="slot-tag">Home</span>
+            </button>
+            <button class="slot" data-slot="1" title="[2] Guide's House / About">
+                <span class="slot-num">2</span>
+                <span class="slot-emoji">🏡</span>
+                <span class="slot-tag">About</span>
+            </button>
+            <button class="slot" data-slot="2" title="[3] Inventory / Skills">
+                <span class="slot-num">3</span>
+                <span class="slot-emoji">🎒</span>
+                <span class="slot-tag">Skills</span>
+            </button>
+            <button class="slot" data-slot="3" title="[4] Caverns / Projects">
+                <span class="slot-num">4</span>
+                <span class="slot-emoji">💎</span>
+                <span class="slot-tag">Projects</span>
+            </button>
+            <button class="slot" data-slot="4" title="[5] The Underworld / Contact">
+                <span class="slot-num">5</span>
+                <span class="slot-emoji">🔥</span>
+                <span class="slot-tag">Contact</span>
+            </button>
+            <button class="slot" data-slot="5" title="[6] Equip Weapon (Sword / Pickaxe)">
+                <span class="slot-num">6</span>
+                <span class="slot-emoji">⚔️</span>
+                <span class="slot-tag">Weapon</span>
+            </button>
+            <button class="slot" data-slot="6" title="[7] Emote / Dialogue">
+                <span class="slot-num">7</span>
+                <span class="slot-emoji">💬</span>
+                <span class="slot-tag">Emote</span>
+            </button>
+            <button class="slot" data-slot="7" title="[8] Toggle Day/Night">
+                <span class="slot-num">8</span>
+                <span class="slot-emoji">🌙</span>
+                <span class="slot-tag">Time</span>
+            </button>
+            <button class="slot" data-slot="8" title="[9] Terraria Soundtrack">
+                <span class="slot-num">9</span>
+                <span class="slot-emoji">🎵</span>
+                <span class="slot-tag">Audio</span>
+            </button>
+            <button class="slot" data-slot="9" title="[0] Surface">
+                <span class="slot-num">0</span>
+                <span class="slot-emoji">🔝</span>
+                <span class="slot-tag">Surface</span>
+            </button>
+        </nav>
+        
+        <button id="mobile-menu-btn" class="pixel-button mobile-only" aria-label="Menu">☰ Menu</button>
+    </header>
+    
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu" class="mobile-menu panel" aria-hidden="true">
+        <button class="close-menu" aria-label="Close Mobile Menu">✕</button>
+        <ul>
+            <li><a href="#section-hero">🏠 Surface (Home)</a></li>
+            <li><a href="#section-about">🏡 Guide's House (About)</a></li>
+            <li><a href="#section-skills">🎒 Inventory (Skills)</a></li>
+            <li><a href="#section-projects">💎 The Caverns (Projects)</a></li>
+            <li><a href="#section-contact">🔥 Underworld (Contact)</a></li>
+        </ul>
+    </div>
+    
+    <!-- Canvas for Animated Terraria Sky, Eye of Cthulhu, Castle, Critters & Walking Player -->
+    <canvas id="game-canvas"></canvas>
+
+    <main id="main-content">
+        
+        <!-- BIOME 1: SURFACE -->
+        <section id="section-hero" class="biome-surface depth-section">
+            <div class="parallax-layer far-hills"></div>
+            <div class="parallax-layer mid-trees"></div>
+            <div class="parallax-layer near-grass"></div>
+            
+            <div class="hero-content">
+                <!-- Authentic Terraria Style Logo Header with Name: ANDIKA PRASETYA -->
+                <div class="terraria-logo-wrapper">
+                    <div class="terraria-pixel-logo">
+                        <span class="logo-grass"></span>
+                        <h1 class="logo-text">ANDIKA PRASETYA</h1>
+                    </div>
+                    <div class="logo-subtitle">AI & DATA ENGINEER • PORTFOLIO</div>
+                </div>
+
+                <div class="hero-info">
+                    <h2 id="hero-name">I Putu Andika Prasetya</h2>
+                    <h3 id="hero-title">AI Engineer | Machine Learning & Data Engineer</h3>
+                    <p id="hero-tagline">I forge AI systems — from raw data to deployed intelligence.</p>
+                </div>
+
+                <!-- Interactive Game Controls Banner -->
+                <div class="controls-banner">
+                    <span class="key-badge">A</span> <span class="key-badge">D</span> or <span class="key-badge">←</span> <span class="key-badge">→</span> Walk
+                    • <span class="key-badge">W</span> or <span class="key-badge">Space</span> Jump
+                    • <span class="key-badge">F</span> Swing Weapon
+                    • Click Ground to Walk • Click Andika for Emotes • <span class="key-badge">1</span>-<span class="key-badge">0</span> Hotbar
+                </div>
+                
+                <!-- Guide NPC Dialogue Box -->
+                <div class="dialogue-box panel">
+                    <div class="npc-portrait" title="The Guide NPC">
+                        <div class="npc-hat"></div>
+                    </div>
+                    <div class="dialogue-text-container">
+                        <div class="dialogue-speaker">The Guide</div>
+                        <p id="dialogue-text">Loading world intel...</p>
+                        <button id="dialogue-next" class="pixel-text-btn">Next ▶</button>
+                    </div>
+                </div>
+                
+                <div class="hero-actions">
+                    <a href="#section-projects" class="pixel-button primary">Explore Caverns 💎</a>
+                    <a href="#section-skills" class="pixel-button">Open Inventory 🎒</a>
+                    <a href="#section-contact" class="pixel-button">Reach Underworld 🔥</a>
+                </div>
+            </div>
+            <div class="surface-grass-ledge"></div>
+        </section>
+        
+        <!-- BIOME 2: GUIDE'S HOUSE (ABOUT) -->
+        <section id="section-about" class="biome-surface depth-section">
+            <div class="section-container">
+                <div class="section-header-banner">
+                    <div class="banner-torch left">🔥</div>
+                    <h2 class="section-title">Guide's House & Character Sheet</h2>
+                    <div class="banner-torch right">🔥</div>
+                </div>
+                
+                <div class="about-grid">
+                    <!-- Character Stats Panel -->
+                    <div class="stat-panel panel">
+                        <div class="panel-header">
+                            <span class="panel-icon">⚔️</span>
+                            <h3>Hero Equipment</h3>
+                        </div>
+                        <ul id="stat-list" class="pixel-list"></ul>
+                    </div>
+                    
+                    <!-- Biography & Achievements Panel -->
+                    <div class="about-text-panel panel">
+                        <div class="panel-header">
+                            <span class="panel-icon">📜</span>
+                            <h3>Journal of Andika</h3>
+                        </div>
+                        <div id="about-text-content"></div>
+                        
+                        <div class="achievements-section mt-4">
+                            <div class="panel-header">
+                                <span class="panel-icon">🏆</span>
+                                <h3>Achievements</h3>
+                            </div>
+                            <div id="achievements-list" class="achievements-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- BIOME 3: UNDERGROUND INVENTORY (SKILLS) -->
+        <section id="section-skills" class="biome-underground depth-section">
+            <div class="section-container">
+                <div class="section-header-banner">
+                    <div class="banner-torch left">🔥</div>
+                    <h2 class="section-title text-white">Player Inventory & Forged Skills</h2>
+                    <div class="banner-torch right">🔥</div>
+                </div>
+                
+                <div class="inventory-panel panel">
+                    <div class="inventory-tabs">
+                        <button class="tab-btn active" data-category="all">All Items</button>
+                        <button class="tab-btn" data-category="AI/ML">🧠 AI/ML</button>
+                        <button class="tab-btn" data-category="Data Engineering">📊 Data Eng</button>
+                        <button class="tab-btn" data-category="Backend & DevOps">⚙️ Backend</button>
+                    </div>
+                    
+                    <div class="inventory-hint">Hover an item slot to view weapon stats & rarity rating</div>
+                    <div id="inventory-grid" class="inventory-grid">
+                        <!-- Slots injected via TypeScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- BIOME 4: THE CAVERNS (PROJECTS) -->
+        <section id="section-projects" class="biome-caverns depth-section">
+            <div class="section-container">
+                <div class="section-header-banner">
+                    <div class="banner-gem left">💎</div>
+                    <h2 class="section-title text-white">The Caverns — Looted Treasure Chests</h2>
+                    <div class="banner-gem right">💎</div>
+                </div>
+                <div class="cavern-subtext">Click on any Golden Chest to unlock its forged repository artifacts</div>
+                
+                <div id="cave-path" class="cave-path">
+                    <!-- Golden chests injected via TypeScript -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- BIOME 5: THE UNDERWORLD (CONTACT) -->
+        <section id="section-contact" class="biome-underworld depth-section">
+            <div class="section-container">
+                <div class="section-header-banner">
+                    <div class="banner-fire left">🔥</div>
+                    <h2 class="section-title text-white">The Underworld — Demon Altar</h2>
+                    <div class="banner-fire right">🔥</div>
+                </div>
+                
+                <div class="underworld-content">
+                    <div class="signpost">
+                        <div class="sign-board">Send a Message to Andika</div>
+                        <div class="sign-post"></div>
+                    </div>
+                    
+                    <div id="contact-links" class="contact-links">
+                        <!-- Links injected via TypeScript -->
+                    </div>
+                    
+                    <a id="hire-btn" href="mailto:andika.prasetya@example.com" class="pixel-button primary cta-hire">
+                        ⚔️ Hire Andika Prasetya ⚔️
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Terraria Project Modal Overlay -->
+    <div id="project-modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content panel tooltip-style" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="close-modal" aria-label="Close">✕</button>
+            <div class="modal-chest-icon">📦</div>
+            <h3 id="modal-title" class="rarity-color">Project Title</h3>
+            <p id="modal-subtitle" class="type-line">Subtitle</p>
+            <p id="modal-desc" class="desc-line"></p>
+            <div id="modal-tech" class="tech-tags"></div>
+            <div class="modal-actions">
+                <a id="modal-github" href="#" target="_blank" rel="noopener noreferrer" class="pixel-button primary">⚔️ Open Repository</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Terraria Item Tooltip -->
+    <div id="dynamic-tooltip" class="tooltip panel" aria-hidden="true">
+        <h4 id="tt-name" class="rarity-color">Name</h4>
+        <p id="tt-type" class="type-line">Type</p>
+        <p id="tt-desc" class="desc-line">Description</p>
+    </div>
+
+    <!-- TypeScript Application Entry Point -->
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

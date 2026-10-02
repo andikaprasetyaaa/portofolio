@@ -1,0 +1,149 @@
+{
+  "hero": {
+    "name": "I Putu Andika Prasetya",
+    "title": "AI Engineer | Machine Learning & Data Engineer",
+    "tagline": "I forge AI systems — from raw data to deployed intelligence.",
+    "dialogue": [
+      "Greetings, traveler! You've reached the world of Andika Prasetya — an AI Engineer who builds things that actually run.",
+      "He trains language models, wires up knowledge graphs, and automates entire pipelines. Then he puts gloves on and spars. Balance.",
+      "Dig down to see what he's forged. Mind the slimes."
+    ],
+    "taglines": [
+      "Now with 100% more neural networks!",
+      "Training slimes since 2020",
+      "I put the 'AI' in Terraria... wait, no.",
+      "Tuning hyperparameters at night.",
+      "Generating terrain..."
+    ]
+  },
+  "about": {
+    "stats": [
+      { "label": "Class", "value": "AI Engineer" },
+      { "label": "Level", "value": "Fresh Graduate" },
+      { "label": "Weapon", "value": "Python" },
+      { "label": "Armor", "value": "Docker & PostgreSQL" },
+      { "label": "Accessory", "value": "Neo4j GraphRAG" },
+      { "label": "Buff", "value": "Combat-sports discipline" },
+      { "label": "Home biome", "value": "Bali, Indonesia" }
+    ],
+    "text": [
+      "I'm a fresh Information Technology graduate from Universitas Udayana (GPA 3.91) and a Bangkit Academy graduate with Distinction (Top 10%), based in Bali.",
+      "I build AI systems end to end. That means NLP models for Indonesian language, knowledge-graph RAG, and automated data pipelines — and I care about the unglamorous parts that make them trustworthy: clean data, deterministic metrics, logging, and containers that start on the first try.",
+      "My thesis combined IndoBERT-based textual entailment with IndoT5 to summarize Indonesian news, and I'm turning it into journal manuscripts. Outside code I train combat sports — it taught me the same loop I use in engineering: show up, take the hit, review the tape, iterate.",
+      "Currently looking for: AI Engineer / Machine Learning / Data Engineering roles."
+    ],
+    "achievements": [
+      {
+        "title": "Dean's List Energy",
+        "description": "GPA 3.91, Information Technology, Universitas Udayana"
+      },
+      {
+        "title": "Bangkit Distinction",
+        "description": "Bangkit Academy, Top 10%"
+      }
+    ]
+  },
+  "skills": [
+    { "name": "Python", "category": "AI/ML", "desc": "Core weapon for ML and Backend.", "rarity": "Cyan", "icon": "python" },
+    { "name": "PyTorch", "category": "AI/ML", "desc": "Deep learning framework.", "rarity": "Cyan", "icon": "pytorch" },
+    { "name": "HF Transformers", "category": "AI/ML", "desc": "State-of-the-art NLP models.", "rarity": "Pink", "icon": "huggingface" },
+    { "name": "IndoBERT", "category": "AI/ML", "desc": "Pre-trained model for Indonesian.", "rarity": "Cyan", "icon": "indobert" },
+    { "name": "IndoT5", "category": "AI/ML", "desc": "Generative model for Indonesian.", "rarity": "Light Purple", "icon": "indot5" },
+    { "name": "NLP", "category": "AI/ML", "desc": "Natural Language Processing.", "rarity": "Cyan", "icon": "nlp" },
+    { "name": "spaCy", "category": "AI/ML", "desc": "Industrial-strength NLP.", "rarity": "Light Red", "icon": "spacy" },
+    { "name": "sentence-transformers", "category": "AI/ML", "desc": "Text and image embeddings.", "rarity": "Pink", "icon": "sentencetrans" },
+    { "name": "LangChain", "category": "AI/ML", "desc": "Building applications with LLMs.", "rarity": "Cyan", "icon": "langchain" },
+    { "name": "GraphRAG", "category": "AI/ML", "desc": "Graph-enhanced RAG systems.", "rarity": "Cyan", "icon": "graphrag" },
+    { "name": "scikit-learn", "category": "AI/ML", "desc": "Machine learning in Python.", "rarity": "Blue", "icon": "sklearn" },
+    { "name": "LLM APIs", "category": "AI/ML", "desc": "OpenAI, Gemini integration.", "rarity": "Green", "icon": "llmapi" },
+    
+    { "name": "PostgreSQL", "category": "Data Engineering", "desc": "Advanced open source relational DB.", "rarity": "Cyan", "icon": "postgres" },
+    { "name": "SQL", "category": "Data Engineering", "desc": "Standard database language.", "rarity": "Cyan", "icon": "sql" },
+    { "name": "Pandas", "category": "Data Engineering", "desc": "Data analysis and manipulation.", "rarity": "Cyan", "icon": "pandas" },
+    { "name": "ETL", "category": "Data Engineering", "desc": "Extract, Transform, Load.", "rarity": "Light Purple", "icon": "etl" },
+    { "name": "Neo4j", "category": "Data Engineering", "desc": "Graph database platform.", "rarity": "Cyan", "icon": "neo4j" },
+    { "name": "Data modeling", "category": "Data Engineering", "desc": "Designing database structures.", "rarity": "Pink", "icon": "datamodel" },
+    { "name": "KPI/Dashboards", "category": "Data Engineering", "desc": "Visualizing metrics.", "rarity": "Light Red", "icon": "kpi" },
+    { "name": "Power BI", "category": "Data Engineering", "desc": "Business analytics service.", "rarity": "Blue", "icon": "powerbi" },
+    
+    { "name": "FastAPI", "category": "Backend & DevOps", "desc": "High performance web framework.", "rarity": "Cyan", "icon": "fastapi" },
+    { "name": "Docker", "category": "Backend & DevOps", "desc": "Containerization platform.", "rarity": "Cyan", "icon": "docker" },
+    { "name": "n8n", "category": "Backend & DevOps", "desc": "Workflow automation tool.", "rarity": "Light Purple", "icon": "n8n" },
+    { "name": "Git/GitHub", "category": "Backend & DevOps", "desc": "Version control system.", "rarity": "Cyan", "icon": "git" },
+    { "name": "Streamlit", "category": "Backend & DevOps", "desc": "Custom web apps for ML.", "rarity": "Pink", "icon": "streamlit" },
+    { "name": "REST APIs", "category": "Backend & DevOps", "desc": "Web service interfaces.", "rarity": "Cyan", "icon": "rest" }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "The Summarizer's Tome",
+      "subtitle": "Hybrid summarization for Indonesian news",
+      "description": "A hybrid summarization system that reads the news the way an editor does. IndoBERT-based textual entailment picks the sentences that matter, then IndoT5 rewrites them into fluent abstractive summaries. Evaluated on Tempo.co and Liputan6 across three premise strategies, backed by a 29,587-article corpus.",
+      "tech": ["NLP", "IndoBERT", "IndoT5", "Transformers", "Jupyter"],
+      "rarity": "Cyan",
+      "repo": "leveraging-textual-entailment-for-hybrid-summarization",
+      "flagship": true
+    },
+    {
+      "id": 2,
+      "title": "Octagon Oracle",
+      "subtitle": "UFC knowledge graph + GraphRAG",
+      "description": "Ask questions about fighters, bouts and styles and get answers grounded in a knowledge graph — not guesses. A resumable scraper feeds Neo4j AuraDB; spaCy, sentence-transformers and LangChain power retrieval, served through FastAPI and Streamlit on a free-tier stack.",
+      "tech": ["GraphRAG", "Neo4j", "LangChain", "spaCy", "FastAPI", "Streamlit"],
+      "rarity": "Light Purple",
+      "repo": "UFC-GraphRAG",
+      "flagship": true
+    },
+    {
+      "id": 3,
+      "title": "The Stitchworks Loom",
+      "subtitle": "Business-process automation for fashion manufacturing",
+      "description": "A simulated fashion factory run end to end: order → production → QC → packing → shipping → reporting. Mock APIs, a PostgreSQL data layer, Python ETL and deterministic KPI calculation, dashboards — and an LLM that only narrates the numbers, never computes them.",
+      "tech": ["PostgreSQL", "FastAPI", "Python ETL", "KPI dashboard", "LLM"],
+      "rarity": "Pink",
+      "repo": "fashion-ops-dashboard"
+    },
+    {
+      "id": 4,
+      "title": "Iron Fist Coach",
+      "subtitle": "A boxing & gym coach that lives in Telegram",
+      "description": "A personal AI coach for boxing and gym training: it chats, sends nightly summaries and scheduled reminders, and deduplicates notifications in Postgres. Orchestrated with n8n workflows on FastAPI and PostgreSQL, all in Docker Compose.",
+      "tech": ["FastAPI", "PostgreSQL", "n8n", "Docker Compose", "Telegram Bot API"],
+      "rarity": "Light Red",
+      "repo": "boxing-coach-automation"
+    },
+    {
+      "id": 5,
+      "title": "The Merchant's Ledger",
+      "subtitle": "Daily Shopify discount report",
+      "description": "Every morning, an email lands with the Shopify orders that redeemed the fixed-amount welcome discount. Pulls data through the Shopify Admin GraphQL API, stores it in Google Sheets or a local JSON file, and runs on a launchd schedule.",
+      "tech": ["Python", "Shopify Admin GraphQL", "Google Sheets", "launchd"],
+      "rarity": "Orange",
+      "repo": "discount-alert-automation"
+    },
+    {
+      "id": 6,
+      "title": "Pulse of the Marketplace",
+      "subtitle": "Shopify store monitoring",
+      "description": "A read-only Shopify dashboard that extracts data securely via the Admin GraphQL API. It features scheduled syncs to a DuckDB backend for reliable analytics without hammering the live store.",
+      "tech": ["Python", "Shopify GraphQL", "DuckDB", "FastAPI", "Vite"],
+      "rarity": "Green",
+      "repo": "shopify-store-pulse"
+    },
+    {
+      "id": 7,
+      "title": "Warden of the Feed",
+      "subtitle": "Hate-speech detection for Indonesian tweets",
+      "description": "A fine-tuned IndoBERTweet classifier that flags hate speech in Indonesian social media text. Evaluated on a 3,240-sample dataset, achieving a 91.52% F1 score and an AUC of 0.9777. The inference is served by FastAPI with a Streamlit interface.",
+      "tech": ["NLP", "IndoBERTweet", "Transformers", "Jupyter", "FastAPI", "Streamlit"],
+      "rarity": "Blue",
+      "repo": "indoberttweet-hate-speech-detection"
+    }
+  ],
+  "contact": {
+    "email": "REPLACE_ME",
+    "linkedin": "REPLACE_ME",
+    "github": "https://github.com/andikaprasetyaaa",
+    "cvUrl": "REPLACE_ME"
+  }
+}

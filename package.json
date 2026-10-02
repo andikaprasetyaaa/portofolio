@@ -1,0 +1,24 @@
+{
+  "name": "terraria-portfolio",
+  "version": "1.0.0",
+  "description": "An interactive Terraria-themed personal portfolio built with TypeScript and HTML5 Canvas.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "terraria",
+    "portfolio",
+    "typescript",
+    "pixel-art",
+    "canvas"
+  ],
+  "author": "I Putu Andika Prasetya (Zoro)",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2"
+  }
+}

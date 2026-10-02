@@ -1,0 +1,1003 @@
+:root {
+  /* Terraria Palette */
+  --panel-bg: linear-gradient(180deg, #1b2858 0%, #101938 100%);
+  --panel-border: #080c1f;
+  --panel-inner-glow: #2d418a;
+  
+  --slot-bg: #222c5e;
+  --slot-border: #131938;
+  --slot-active: #ffd24a;
+  --slot-hover: #ffffff;
+  
+  --heart-red: #e8262d;
+  --heart-border: #ffd24a;
+  --mana-blue: #38bdf8;
+  --gold: #ffd24a;
+  
+  /* Biome Gradients */
+  --sky-day-top: #5cb3f7;
+  --sky-day-bottom: #bae3ff;
+  --sky-night-top: #06091f;
+  --sky-night-bottom: #16204a;
+  
+  --grass-top: #42b238;
+  --grass-shade: #2b7d23;
+  --dirt: #5c3818;
+  --stone: #3a3b45;
+  --cavern: #21222b;
+  --lava: #ff4d00;
+  --lava-glow: #ffa600;
+  
+  /* Terraria Rarities */
+  --rarity-white: #ffffff;
+  --rarity-gray: #9b9b9b;
+  --rarity-blue: #7099ff;
+  --rarity-green: #56ff56;
+  --rarity-orange: #ffa64d;
+  --rarity-light-red: #ff6666;
+  --rarity-pink: #ff5ca8;
+  --rarity-light-purple: #cb7fff;
+  --rarity-cyan: #05c8ff;
+  
+  /* Fonts */
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-terminal: 'VT323', monospace;
+  
+  /* Layout */
+  --max-width: 1200px;
+}
+
+[data-theme="night"] {
+  --sky-day-top: var(--sky-night-top);
+  --sky-day-bottom: var(--sky-night-bottom);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  image-rendering: pixelated;
+  -webkit-font-smoothing: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-terminal);
+  font-size: 24px;
+  line-height: 1.4;
+  color: #fff;
+  background-color: #0b0c10;
+  overflow-x: hidden;
+  cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICA8cGF0aCBmaWxsPSIjZmZmIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNMSAxbDE0IDctNi41IDEuNUwxMCAxNmwtMy00LjUtNCA0VjF6Ii8+Cjwvc3ZnPgo='), auto;
+}
+
+a, button, .slot, .chest-item, .tab-btn, .key-badge {
+  cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICA8cGF0aCBmaWxsPSIjZmZkMjRhIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMS41IiBkPSJNNCAxdjRIMXY4aDJ2MmgydjFoNnYtMWgydi0yaDJWNWgtM1YxSDR6Ii8+Cjwvc3ZnPgo='), pointer !important;
+}
+
+/* Pixel Headings */
+h1, h2, h3, h4, .pixel-font {
+  font-family: var(--font-pixel);
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 0 3px 0 #000;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+}
+
+h2 { font-size: 1.4rem; margin-bottom: 1.2rem; }
+h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 10px;
+  background: #000;
+  color: var(--gold);
+  border: 2px solid var(--gold);
+  padding: 8px 12px;
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  z-index: 9999;
+}
+.skip-link:focus { top: 10px; }
+
+/* Terraria Pixel Panels */
+.panel {
+  background: var(--panel-bg);
+  border: 4px solid var(--panel-border);
+  box-shadow: 
+    inset 2px 2px 0 rgba(255, 255, 255, 0.25),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.6),
+    4px 4px 0 #000;
+  padding: 1.6rem;
+  border-radius: 4px;
+  position: relative;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid rgba(255, 210, 74, 0.3);
+  padding-bottom: 8px;
+  margin-bottom: 1rem;
+}
+.panel-icon { font-size: 1.4rem; }
+
+/* Buttons */
+.pixel-button {
+  background: var(--slot-bg);
+  border: 4px solid var(--panel-border);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  padding: 12px 18px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 
+    inset 2px 2px 0 rgba(255, 255, 255, 0.3),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.5),
+    3px 3px 0 #000;
+  transition: transform 0.08s ease, border-color 0.1s ease;
+  user-select: none;
+}
+.pixel-button:hover, .pixel-button:focus {
+  border-color: var(--slot-hover);
+  transform: translateY(-2px);
+  outline: none;
+}
+.pixel-button:active {
+  transform: translateY(2px);
+  box-shadow: inset 3px 3px 0 rgba(0,0,0,0.6);
+}
+.pixel-button.primary {
+  background: #2e8b24;
+  border-color: #12400e;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
+}
+.pixel-button.primary:hover {
+  background: #39a62c;
+  border-color: #ffffff;
+}
+.pixel-text-btn {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-shadow: 2px 2px 0 #000;
+  transition: color 0.1s;
+}
+.pixel-text-btn:hover { color: #fff; }
+
+/* HUD (Always Visible!) */
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 500;
+}
+.hud > * { pointer-events: auto; }
+
+/* Top-Left: Life & Depth */
+.hud-top-left {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.life-bar-label {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 1px;
+}
+.hearts {
+  display: flex;
+  gap: 5px;
+}
+.heart {
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(circle at 35% 35%, #ff7378 0%, var(--heart-red) 65%, #850b10 100%);
+  border: 2px solid #ffd24a;
+  box-shadow: 0 0 4px #000, inset 1px 1px 0 #fff;
+  clip-path: polygon(
+    50% 88%,
+    10% 48%,
+    10% 20%,
+    30% 10%,
+    50% 24%,
+    70% 10%,
+    90% 20%,
+    90% 48%
+  );
+  animation: heartPulse 3s infinite ease-in-out;
+}
+.heart:nth-child(2) { animation-delay: 0.2s; }
+.heart:nth-child(3) { animation-delay: 0.4s; }
+.heart:nth-child(4) { animation-delay: 0.6s; }
+.heart:nth-child(5) { animation-delay: 0.8s; }
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.depth-meter {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000, -1px -1px 0 #000;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 8px;
+  border-left: 3px solid var(--gold);
+  margin-top: 4px;
+  width: fit-content;
+}
+
+/* Top-Right: Mana Stars & Controls */
+.hud-top-right {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 10px;
+  border: 2px solid #222c5e;
+  border-radius: 4px;
+}
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  filter: drop-shadow(2px 2px 0 #000);
+  transition: transform 0.1s;
+}
+.icon-button:hover { transform: scale(1.15); }
+#volume-slider {
+  width: 70px;
+  accent-color: var(--gold);
+  cursor: pointer;
+}
+
+.mana-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.mana-label {
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: var(--mana-blue);
+  text-shadow: 1px 1px 0 #000;
+}
+.mana-star {
+  font-size: 1.3rem;
+  color: var(--mana-blue);
+  text-shadow: 0 0 8px #0284c7, 0 0 14px #38bdf8, 2px 2px 0 #000;
+  animation: starTwinkle 2.5s infinite ease-in-out;
+}
+.mana-star:nth-child(2) { animation-delay: 0.3s; }
+.mana-star:nth-child(3) { animation-delay: 0.6s; }
+.mana-star:nth-child(4) { animation-delay: 0.9s; }
+.mana-star:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+
+/* 10-Slot Terraria Hotbar */
+.hotbar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  background: rgba(14, 18, 42, 0.92);
+  padding: 8px 12px;
+  border: 4px solid #080c1f;
+  box-shadow: 
+    inset 2px 2px 0 rgba(255,255,255,0.2),
+    inset -2px -2px 0 rgba(0,0,0,0.8),
+    0 4px 12px rgba(0,0,0,0.8);
+  border-radius: 4px;
+}
+.slot {
+  width: 54px;
+  height: 54px;
+  background: var(--slot-bg);
+  border: 3px solid var(--slot-border);
+  position: relative;
+  cursor: pointer;
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.2), inset -2px -2px 0 rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.1s, transform 0.1s;
+}
+.slot:hover {
+  border-color: var(--slot-hover);
+  transform: translateY(-2px);
+}
+.slot.active {
+  border-color: var(--slot-active);
+  box-shadow: 0 0 10px #ffd24a, inset 2px 2px 0 #fff;
+  transform: translateY(-4px);
+}
+.slot-num {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  font-family: var(--font-pixel);
+  font-size: 0.55rem;
+  color: var(--gold);
+  text-shadow: 1px 1px 0 #000;
+}
+.slot-emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+.slot-tag {
+  font-family: var(--font-pixel);
+  font-size: 0.45rem;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  margin-top: 2px;
+}
+
+.mobile-only { display: none; }
+
+/* Canvas (Z-Index 1: In front of background, behind UI text) */
+#game-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* Main Layout & Biomes */
+main {
+  position: relative;
+  z-index: 2;
+}
+
+.depth-section {
+  min-height: 100vh;
+  padding: 100px 24px 80px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+.section-header-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.banner-torch, .banner-gem, .banner-fire {
+  font-size: 1.8rem;
+  animation: torchFlicker 1.8s infinite alternate ease-in-out;
+}
+@keyframes torchFlicker {
+  0% { transform: scale(1) rotate(-3deg); filter: drop-shadow(0 0 4px #ffa600); }
+  100% { transform: scale(1.15) rotate(3deg); filter: drop-shadow(0 0 12px #ff4d00); }
+}
+
+/* BIOME 1: SURFACE (Transparent so Canvas Sky, Clouds, Sun, Eye of Cthulhu & Hero are fully visible) */
+.biome-surface {
+  background: linear-gradient(180deg, rgba(92, 179, 247, 0.25) 0%, rgba(186, 227, 255, 0.2) 65%, rgba(58, 117, 52, 0.6) 98%, var(--dirt) 100%);
+}
+
+.surface-grass-ledge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 32px;
+  background: repeating-linear-gradient(90deg, #42b238, #42b238 16px, #369c2d 16px, #369c2d 32px);
+  border-top: 4px solid #66d95b;
+  box-shadow: 0 4px 0 #205c19;
+}
+
+/* Terraria Logo in Hero Section */
+.terraria-logo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+.terraria-pixel-logo {
+  position: relative;
+  display: inline-block;
+  padding: 8px 16px;
+}
+.logo-grass {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  right: 4px;
+  height: 14px;
+  background: #42b238;
+  border-top: 3px solid #6ee861;
+  clip-path: polygon(
+    0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%,
+    40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%,
+    80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%
+  );
+}
+.logo-text {
+  font-family: var(--font-pixel);
+  font-size: 3.2rem;
+  color: #a46d3d;
+  background: linear-gradient(180deg, #a46d3d 0%, #6d421d 60%, #44260d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    3px 3px 0 #000, 
+    -3px -3px 0 #000, 
+    3px -3px 0 #000, 
+    -3px 3px 0 #000,
+    0 5px 0 #000,
+    0 0 10px rgba(0,0,0,0.8);
+  letter-spacing: 4px;
+  animation: logoFloat 4s infinite ease-in-out;
+}
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.logo-subtitle {
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #000;
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+/* Controls Banner */
+.controls-banner {
+  background: rgba(14, 18, 42, 0.85);
+  border: 2px solid #2d418a;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #fff;
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+.key-badge {
+  background: #2a357a;
+  border: 2px solid #5a6eb8;
+  color: var(--gold);
+  padding: 2px 6px;
+  border-radius: 2px;
+  box-shadow: 0 2px 0 #0b0f2a;
+}
+
+/* Hero Content */
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  margin-top: 4vh;
+  position: relative;
+  z-index: 10;
+}
+.hero-info h2 {
+  font-size: 1.8rem;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+.hero-info h3 {
+  font-size: 1.3rem;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+.hero-info p {
+  font-size: 1.4rem;
+  color: #e0e8f0;
+}
+
+/* Guide NPC Dialogue Box */
+.dialogue-box {
+  display: flex;
+  gap: 1.2rem;
+  max-width: 660px;
+  width: 100%;
+  text-align: left;
+}
+.npc-portrait {
+  width: 72px;
+  height: 72px;
+  background: #5c3818;
+  border: 4px solid #1c1106;
+  flex-shrink: 0;
+  position: relative;
+  box-shadow: inset 2px 2px 0 #8b5a2b;
+}
+.npc-hat {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  height: 24px;
+  background: #2b7d23;
+  border-bottom: 3px solid #1a5214;
+}
+.npc-portrait::after {
+  content: '👤';
+  font-size: 2.2rem;
+  position: absolute;
+  bottom: 4px;
+  left: 14px;
+}
+.dialogue-speaker {
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  color: var(--gold);
+  text-shadow: 1px 1px 0 #000;
+  margin-bottom: 4px;
+}
+.dialogue-text-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#dialogue-text {
+  min-height: 4em;
+  font-size: 1.25rem;
+  color: #ffffff;
+}
+#dialogue-next {
+  align-self: flex-end;
+  margin-top: 6px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* BIOME 2: GUIDE'S HOUSE (ABOUT) */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.8rem;
+}
+.pixel-list {
+  list-style: none;
+}
+.pixel-list li {
+  margin-bottom: 0.8rem;
+  font-size: 1.25rem;
+  border-bottom: 1px dashed rgba(255,255,255,0.15);
+  padding-bottom: 4px;
+}
+.pixel-list span {
+  color: var(--gold);
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+}
+.about-text-panel p {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.achievement-item {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-left: 4px solid var(--gold);
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.1);
+  transition: transform 0.1s, border-color 0.1s;
+}
+.achievement-item:hover {
+  transform: translateX(4px);
+  border-left-color: #ffffff;
+}
+.achievement-item strong {
+  font-family: var(--font-pixel);
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+/* BIOME 3: INVENTORY (SKILLS) */
+.biome-underground {
+  background: #3c2410;
+  border-top: 8px solid var(--grass-top);
+  box-shadow: inset 0 8px 16px rgba(0,0,0,0.6);
+}
+.inventory-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.tab-btn {
+  background: var(--slot-bg);
+  color: #fff;
+  border: 3px solid var(--panel-border);
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  padding: 10px 16px;
+  cursor: pointer;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,0.2);
+  transition: all 0.1s;
+}
+.tab-btn.active, .tab-btn:hover {
+  border-color: var(--gold);
+  background: #324080;
+  color: var(--gold);
+}
+.inventory-hint {
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: #9cb3d8;
+  margin-bottom: 1rem;
+}
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 10px;
+}
+.slot-item-icon {
+  width: 44px;
+  height: 44px;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-pixel);
+  font-size: 0.6rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* BIOME 4: THE CAVERNS (PROJECTS) */
+.biome-caverns {
+  background: linear-gradient(180deg, #3c2410 0%, #1e2029 40%, #14151b 100%);
+  border-top: 6px solid #5a5c68;
+}
+.cavern-subtext {
+  font-family: var(--font-pixel);
+  font-size: 0.75rem;
+  color: #8be9fd;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 0 #000;
+}
+.cave-path {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.chest-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  background: rgba(15, 20, 38, 0.6);
+  padding: 1.5rem;
+  border: 3px solid #283152;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  transition: transform 0.15s, border-color 0.15s;
+}
+.chest-item:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--gold);
+}
+.chest-sprite {
+  width: 72px;
+  height: 64px;
+  background: linear-gradient(180deg, #ffd24a 0%, #d4a017 60%, #996e08 100%);
+  border: 4px solid #3d2614;
+  border-radius: 6px 6px 2px 2px;
+  position: relative;
+  box-shadow: 0 0 14px rgba(255, 210, 74, 0.4), inset 2px 2px 0 #fff;
+}
+.chest-sprite::before {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: #3d2614;
+}
+.chest-sprite::after {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 12px;
+  background: #444;
+  border: 2px solid #ffd24a;
+}
+.chest-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 8px;
+  background: radial-gradient(circle, rgba(255, 210, 74, 0.4), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.chest-item:hover .chest-glow { opacity: 1; }
+.chest-title {
+  font-family: var(--font-pixel);
+  font-size: 0.95rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 #000;
+}
+.chest-sub {
+  font-size: 1.15rem;
+  color: #bbb;
+  text-align: center;
+}
+
+/* BIOME 5: THE UNDERWORLD (CONTACT) */
+.biome-underworld {
+  background: linear-gradient(180deg, #14151b 0%, #2e0d0d 40%, #541108 75%, var(--lava) 100%);
+  border-top: 6px solid #4a1515;
+}
+.underworld-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+.signpost { text-align: center; }
+.sign-board {
+  background: #6d421d;
+  border: 4px solid #3d2614;
+  padding: 1.2rem 2.2rem;
+  font-family: var(--font-pixel);
+  font-size: 1.2rem;
+  color: #fff;
+  text-shadow: 2px 2px 0 #000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+}
+.sign-post {
+  width: 24px;
+  height: 70px;
+  background: #3d2614;
+  margin: 0 auto;
+  border-left: 3px solid #20120b;
+  border-right: 3px solid #20120b;
+}
+.contact-links {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.cta-hire {
+  font-size: 1.25rem !important;
+  padding: 18px 32px !important;
+  animation: hirePulse 2s infinite ease-in-out;
+}
+@keyframes hirePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 10px #ff4d00; }
+  50% { transform: scale(1.06); box-shadow: 0 0 24px #ffd24a; }
+}
+
+.site-footer {
+  margin-top: 5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #ffd24a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-shadow: 1px 1px 0 #000;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+.modal-overlay[aria-hidden="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+.modal-content {
+  max-width: 650px;
+  width: 90%;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.modal-chest-icon { font-size: 2.5rem; margin-bottom: 8px; }
+.tech-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 1.2rem 0;
+}
+.tech-tag {
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 210, 74, 0.4);
+  padding: 4px 10px;
+  font-family: var(--font-pixel);
+  font-size: 0.65rem;
+  color: var(--gold);
+}
+
+/* Terraria Item Tooltip */
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  z-index: 3000;
+  max-width: 320px;
+  padding: 1.2rem;
+  opacity: 1;
+  transition: opacity 0.08s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.9);
+}
+.tooltip[aria-hidden="true"] { opacity: 0; }
+.type-line {
+  color: #9cb3d8;
+  font-style: italic;
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+.desc-line {
+  font-size: 1.2rem;
+  line-height: 1.35;
+}
+
+/* Terraria Rarities */
+.rarity-cyan { color: var(--rarity-cyan) !important; text-shadow: 0 0 6px rgba(5,200,255,0.6), 2px 2px 0 #000; }
+.rarity-pink { color: var(--rarity-pink) !important; text-shadow: 0 0 6px rgba(255,92,168,0.6), 2px 2px 0 #000; }
+.rarity-light-purple { color: var(--rarity-light-purple) !important; text-shadow: 0 0 6px rgba(203,127,255,0.6), 2px 2px 0 #000; }
+.rarity-light-red { color: var(--rarity-light-red) !important; text-shadow: 0 0 6px rgba(255,102,102,0.6), 2px 2px 0 #000; }
+.rarity-orange { color: var(--rarity-orange) !important; text-shadow: 0 0 6px rgba(255,166,77,0.6), 2px 2px 0 #000; }
+.rarity-green { color: var(--rarity-green) !important; text-shadow: 0 0 6px rgba(86,255,86,0.6), 2px 2px 0 #000; }
+.rarity-blue { color: var(--rarity-blue) !important; text-shadow: 0 0 6px rgba(112,153,255,0.6), 2px 2px 0 #000; }
+.rarity-white { color: var(--rarity-white) !important; text-shadow: 2px 2px 0 #000; }
+
+/* Parallax Layer Placeholders */
+.parallax-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.far-hills { height: 420px; background: linear-gradient(180deg, transparent 40%, rgba(70, 130, 180, 0.25) 100%); }
+.mid-trees { height: 320px; background: linear-gradient(180deg, transparent 50%, rgba(40, 110, 45, 0.35) 100%); }
+.near-grass { height: 120px; background: linear-gradient(180deg, transparent 60%, rgba(30, 90, 35, 0.6) 100%); z-index: 2; }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  z-index: 2001;
+}
+.mobile-menu[aria-hidden="true"] { display: none; }
+.mobile-menu ul { list-style: none; }
+.mobile-menu a {
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-pixel);
+  font-size: 0.8rem;
+  display: block;
+  padding: 10px;
+}
+.close-menu {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .cave-path { grid-template-columns: 1fr; }
+  .hotbar { display: none; }
+  .mobile-only {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 501;
+  }
+  .hud-top-right { right: 10px; }
+  .logo-text { font-size: 2.2rem; }
+  .hero-info h2 { font-size: 1.4rem; }
+  .hero-info h3 { font-size: 1.1rem; }
+  .dialogue-box { flex-direction: column; align-items: center; text-align: center; }
+  #dialogue-next { align-self: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
