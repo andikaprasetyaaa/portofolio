@@ -127,18 +127,39 @@
     </div>
     
     <!-- Canvas for Animated Terraria Sky, Eye of Cthulhu, Castle, Critters & Walking Player -->
-    <canvas id="game-canvas"></canvas>
 
-    <main id="main-content">
-        
-        <!-- BIOME 1: SURFACE -->
-        <section id="section-hero" class="biome-surface depth-section">
+
+        <main id="dashboard-container">
+        <!-- LEFT PANEL (Stats/Skills) -->
+        <div id="panel-left" class="dashboard-panel panel">
+            <div class="panel-header">
+                <span class="panel-icon">⚔️</span>
+                <h3>Hero Equipment</h3>
+            </div>
+            <ul id="stat-list" class="pixel-list"></ul>
+
+            <div class="panel-header" style="margin-top: 1.5rem;">
+                <span class="panel-icon">🎒</span>
+                <h3>Inventory</h3>
+            </div>
+            <div class="inventory-tabs">
+                <button class="tab-btn active" data-category="all">All Items</button>
+                <button class="tab-btn" data-category="AI/ML">🧠 AI/ML</button>
+                <button class="tab-btn" data-category="Data Engineering">📊 Data Eng</button>
+                <button class="tab-btn" data-category="Backend & DevOps">⚙️ Backend</button>
+            </div>
+            <div id="inventory-grid" class="inventory-grid"></div>
+        </div>
+
+        <!-- CENTER PANEL (Canvas / Hero Area) -->
+        <div id="panel-center" class="dashboard-center">
             <div class="parallax-layer far-hills"></div>
             <div class="parallax-layer mid-trees"></div>
             <div class="parallax-layer near-grass"></div>
             
+            <canvas id="game-canvas"></canvas>
+
             <div class="hero-content">
-                <!-- Authentic Terraria Style Logo Header with Name: ANDIKA PRASETYA -->
                 <div class="terraria-logo-wrapper">
                     <div class="terraria-pixel-logo">
                         <span class="logo-grass"></span>
@@ -152,142 +173,53 @@
                     <h3 id="hero-title">AI Engineer | Machine Learning & Data Engineer</h3>
                     <p id="hero-tagline">I forge AI systems — from raw data to deployed intelligence.</p>
                 </div>
-
-                <!-- Interactive Game Controls Banner -->
-                <div class="controls-banner">
-                    <span class="key-badge">A</span> <span class="key-badge">D</span> or <span class="key-badge">←</span> <span class="key-badge">→</span> Walk
-                    • <span class="key-badge">W</span> or <span class="key-badge">Space</span> Jump
-                    • <span class="key-badge">F</span> Swing Weapon
-                    • Click Ground to Walk • Click Andika for Emotes • <span class="key-badge">1</span>-<span class="key-badge">0</span> Hotbar
-                </div>
-                
-                <!-- Guide NPC Dialogue Box -->
-                <div class="dialogue-box panel">
-                    <div class="npc-portrait" title="The Guide NPC">
-                        <div class="npc-hat"></div>
-                    </div>
-                    <div class="dialogue-text-container">
-                        <div class="dialogue-speaker">The Guide</div>
-                        <p id="dialogue-text">Loading world intel...</p>
-                        <button id="dialogue-next" class="pixel-text-btn">Next ▶</button>
-                    </div>
-                </div>
-                
-                <div class="hero-actions">
-                    <a href="#section-projects" class="pixel-button primary">Explore Caverns 💎</a>
-                    <a href="#section-skills" class="pixel-button">Open Inventory 🎒</a>
-                    <a href="#section-contact" class="pixel-button">Reach Underworld 🔥</a>
-                </div>
             </div>
             <div class="surface-grass-ledge"></div>
-        </section>
-        
-        <!-- BIOME 2: GUIDE'S HOUSE (ABOUT) -->
-        <section id="section-about" class="biome-surface depth-section">
-            <div class="section-container">
-                <div class="section-header-banner">
-                    <div class="banner-torch left">🔥</div>
-                    <h2 class="section-title">Guide's House & Character Sheet</h2>
-                    <div class="banner-torch right">🔥</div>
+        </div>
+
+        <!-- RIGHT PANEL (Projects / Chat) -->
+        <div id="panel-right" class="dashboard-panel panel">
+            <!-- Guide NPC Dialogue Box (Chat) -->
+            <div class="chat-container">
+                <div class="npc-portrait" title="The Guide NPC">
+                    <div class="npc-hat"></div>
                 </div>
-                
-                <div class="about-grid">
-                    <!-- Character Stats Panel -->
-                    <div class="stat-panel panel">
-                        <div class="panel-header">
-                            <span class="panel-icon">⚔️</span>
-                            <h3>Hero Equipment</h3>
-                        </div>
-                        <ul id="stat-list" class="pixel-list"></ul>
-                    </div>
-                    
-                    <!-- Biography & Achievements Panel -->
-                    <div class="about-text-panel panel">
-                        <div class="panel-header">
-                            <span class="panel-icon">📜</span>
-                            <h3>Journal of Andika</h3>
-                        </div>
-                        <div id="about-text-content"></div>
-                        
-                        <div class="achievements-section mt-4">
-                            <div class="panel-header">
-                                <span class="panel-icon">🏆</span>
-                                <h3>Achievements</h3>
-                            </div>
-                            <div id="achievements-list" class="achievements-list"></div>
-                        </div>
-                    </div>
+                <div class="dialogue-text-container">
+                    <div class="dialogue-speaker">The Guide</div>
+                    <p id="dialogue-text">Loading world intel...</p>
+                    <button id="dialogue-next" class="pixel-text-btn">Next ▶</button>
                 </div>
             </div>
-        </section>
-        
-        <!-- BIOME 3: UNDERGROUND INVENTORY (SKILLS) -->
-        <section id="section-skills" class="biome-underground depth-section">
-            <div class="section-container">
-                <div class="section-header-banner">
-                    <div class="banner-torch left">🔥</div>
-                    <h2 class="section-title text-white">Player Inventory & Forged Skills</h2>
-                    <div class="banner-torch right">🔥</div>
+
+            <!-- About / Achievements -->
+            <div id="about-text-content" style="margin-top: 1.5rem;"></div>
+            <div class="achievements-section mt-4">
+                <div class="panel-header">
+                    <span class="panel-icon">🏆</span>
+                    <h3>Achievements</h3>
                 </div>
-                
-                <div class="inventory-panel panel">
-                    <div class="inventory-tabs">
-                        <button class="tab-btn active" data-category="all">All Items</button>
-                        <button class="tab-btn" data-category="AI/ML">🧠 AI/ML</button>
-                        <button class="tab-btn" data-category="Data Engineering">📊 Data Eng</button>
-                        <button class="tab-btn" data-category="Backend & DevOps">⚙️ Backend</button>
-                    </div>
-                    
-                    <div class="inventory-hint">Hover an item slot to view weapon stats & rarity rating</div>
-                    <div id="inventory-grid" class="inventory-grid">
-                        <!-- Slots injected via TypeScript -->
-                    </div>
-                </div>
+                <div id="achievements-list" class="achievements-list"></div>
             </div>
-        </section>
-        
-        <!-- BIOME 4: THE CAVERNS (PROJECTS) -->
-        <section id="section-projects" class="biome-caverns depth-section">
-            <div class="section-container">
-                <div class="section-header-banner">
-                    <div class="banner-gem left">💎</div>
-                    <h2 class="section-title text-white">The Caverns — Looted Treasure Chests</h2>
-                    <div class="banner-gem right">💎</div>
-                </div>
-                <div class="cavern-subtext">Click on any Golden Chest to unlock its forged repository artifacts</div>
-                
-                <div id="cave-path" class="cave-path">
-                    <!-- Golden chests injected via TypeScript -->
-                </div>
+
+            <!-- Projects / Chests -->
+            <div class="panel-header" style="margin-top: 1.5rem;">
+                <span class="panel-icon">💎</span>
+                <h3>The Caverns</h3>
             </div>
-        </section>
-        
-        <!-- BIOME 5: THE UNDERWORLD (CONTACT) -->
-        <section id="section-contact" class="biome-underworld depth-section">
-            <div class="section-container">
-                <div class="section-header-banner">
-                    <div class="banner-fire left">🔥</div>
-                    <h2 class="section-title text-white">The Underworld — Demon Altar</h2>
-                    <div class="banner-fire right">🔥</div>
-                </div>
-                
-                <div class="underworld-content">
-                    <div class="signpost">
-                        <div class="sign-board">Send a Message to Andika</div>
-                        <div class="sign-post"></div>
-                    </div>
-                    
-                    <div id="contact-links" class="contact-links">
-                        <!-- Links injected via TypeScript -->
-                    </div>
-                    
-                    <a id="hire-btn" href="mailto:andika.prasetya@example.com" class="pixel-button primary cta-hire">
-                        ⚔️ Hire Andika Prasetya ⚔️
-                    </a>
-                </div>
+            <div id="cave-path" class="cave-path-grid"></div>
+
+            <!-- Contact -->
+            <div class="panel-header" style="margin-top: 1.5rem;">
+                <span class="panel-icon">🔥</span>
+                <h3>Underworld (Contact)</h3>
             </div>
-        </section>
-        
+            <div id="contact-links" class="contact-links"></div>
+            <div style="text-align: center; margin-top: 1rem;">
+                <a id="hire-btn" href="mailto:andika.prasetya@example.com" class="pixel-button primary cta-hire" style="font-size: 1rem !important; padding: 12px 18px !important;">
+                    ⚔️ Hire Andika ⚔️
+                </a>
+            </div>
+        </div>
     </main>
     
     <!-- Terraria Project Modal Overlay -->
