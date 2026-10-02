@@ -1,4 +1,6 @@
 import { playStepSound, playJumpSound } from './audio.js';
+import { ImageAssets } from './assets.js';
+
 
 export interface DustParticle {
   x: number;
@@ -203,162 +205,106 @@ export class TerrariaPlayer {
     const px = Math.round(this.x);
     const py = Math.round(this.y);
 
-    // Idle breathing bob
-    const idleBob = (!this.isWalking && !this.isJumping)
-      ? Math.sin(this.idleTime * 0.08) * 1.5
-      : 0;
-
     ctx.save();
-    ctx.translate(px, py + idleBob);
-    ctx.scale(this.facing, 1);
+    ctx.translate(px, py);
+    if (this.facing === -1) {
+      ctx.scale(-1, 1);
+    }
 
-    // --- LEGS & SHOES ---
-    let leftLegX = -3 * scale;
-    let rightLegX = 0;
-    let legY = -6 * scale;
-    let legHeight = 6 * scale;
+    if (ImageAssets['guide'] && ImageAssets['guide'].complete && ImageAssets['guide'].naturalWidth !== 0) {
+      // Walking bobbing effect
+      const bobY = this.isWalking ? Math.abs(Math.sin(this.walkTimer * 0.2)) * 2 * scale : 0;
+      ctx.translate(0, -bobY);
 
-    if (this.isWalking && !this.isJumping) {
-      // 4-frame Terraria leg strides
-      if (this.walkFrame === 1) {
-        leftLegX = -5 * scale;
-        rightLegX = 2 * scale;
-      } else if (this.walkFrame === 2) {
-        leftLegX = -2 * scale;
-        rightLegX = -1 * scale;
-        legY -= 1 * scale;
-      } else if (this.walkFrame === 3) {
-        leftLegX = 1 * scale;
-        rightLegX = -4 * scale;
+      // Draw guide sprite, centered horizontally, bottom aligned
+      ctx.drawImage(ImageAssets['guide'], -12 * scale, -24 * scale, 24 * scale, 24 * scale);
+
+      // Draw equipped weapon if any
+      if (this.equippedWeapon === 'sword') {
+        const attackAngle = this.isWalking ? Math.sin(this.walkTimer * 0.3) * 0.5 : 0;
+        ctx.save();
+        ctx.translate(6 * scale, -10 * scale);
+        ctx.rotate(attackAngle + (Math.PI / 4));
+
+        if (ImageAssets['copper_sword'] && ImageAssets['copper_sword'].complete) {
+          ctx.drawImage(ImageAssets['copper_sword'], -6 * scale, -18 * scale, 12 * scale, 18 * scale);
+        } else {
+          ctx.fillStyle = '#8b6f47'; // Bronze
+          ctx.fillRect(-2 * scale, -18 * scale, 4 * scale, 18 * scale);
+        }
+        ctx.restore();
       }
-    } else if (this.isJumping) {
-      legY -= 2 * scale;
-      legHeight = 5 * scale;
-      leftLegX = -4 * scale;
-      rightLegX = 1 * scale;
-    }
-
-    // Pants (Zoro green / dark emerald trousers)
-    ctx.fillStyle = '#1c3e29';
-    ctx.fillRect(leftLegX, legY, 3 * scale, legHeight);
-    ctx.fillRect(rightLegX, legY, 3 * scale, legHeight);
-
-    // Boots (Terraria Leather boots)
-    ctx.fillStyle = '#4a2d18';
-    ctx.fillRect(leftLegX - 1 * scale, legY + legHeight - 2 * scale, 4 * scale, 2 * scale);
-    ctx.fillRect(rightLegX - 1 * scale, legY + legHeight - 2 * scale, 4 * scale, 2 * scale);
-    // Boot soles (black/dark)
-    ctx.fillStyle = '#1f130b';
-    ctx.fillRect(leftLegX - 1 * scale, legY + legHeight - 0.7 * scale, 4 * scale, 0.7 * scale);
-    ctx.fillRect(rightLegX - 1 * scale, legY + legHeight - 0.7 * scale, 4 * scale, 0.7 * scale);
-
-    // --- TORSO / SHIRT ---
-    const torsoY = -14 * scale;
-    // White adventurer shirt
-    ctx.fillStyle = '#f0ede6';
-    ctx.fillRect(-4 * scale, torsoY, 7 * scale, 8 * scale);
-    // Shirt shading
-    ctx.fillStyle = '#d5cebe';
-    ctx.fillRect(-4 * scale, torsoY + 4 * scale, 7 * scale, 4 * scale);
-
-    // Red martial arts sash / belt (Terraria style)
-    ctx.fillStyle = '#a62424';
-    ctx.fillRect(-4.5 * scale, torsoY + 6 * scale, 8 * scale, 2.5 * scale);
-    // Gold buckle
-    ctx.fillStyle = '#ffd24a';
-    ctx.fillRect(-1 * scale, torsoY + 6.2 * scale, 2 * scale, 2 * scale);
-
-    // --- HEAD & FACE ---
-    const headY = -22 * scale;
-    // Skin tone
-    ctx.fillStyle = '#ffd3a1';
-    ctx.fillRect(-4 * scale, headY, 8 * scale, 8 * scale);
-    // Neck
-    ctx.fillRect(-2 * scale, torsoY - 1 * scale, 4 * scale, 1.5 * scale);
-
-    // Dark green bandana / hair (Zoro's iconic look)
-    ctx.fillStyle = '#1e5230';
-    ctx.fillRect(-4.5 * scale, headY - 1 * scale, 9 * scale, 3.5 * scale);
-    // Hair spikes on top
-    ctx.fillRect(-3 * scale, headY - 2.5 * scale, 6 * scale, 2 * scale);
-    ctx.fillRect(-1 * scale, headY - 3.5 * scale, 3 * scale, 1.5 * scale);
-    // Hair highlights
-    ctx.fillStyle = '#3ca462';
-    ctx.fillRect(-3 * scale, headY - 1.5 * scale, 4 * scale, 1 * scale);
-
-    // Eye (facing right)
-    if (!this.isBlinking) {
-      // White of eye
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0.5 * scale, headY + 3.5 * scale, 2.5 * scale, 2 * scale);
-      // Dark pupil looking ahead
-      ctx.fillStyle = '#1a1a1a';
-      ctx.fillRect(1.5 * scale, headY + 3.5 * scale, 1.5 * scale, 2 * scale);
     } else {
-      // Blink line
-      ctx.fillStyle = '#7a4b27';
-      ctx.fillRect(0.5 * scale, headY + 4.5 * scale, 2.5 * scale, 1 * scale);
-    }
-    // Mouth / determination line
-    ctx.fillStyle = '#b8754b';
-    ctx.fillRect(1 * scale, headY + 6.5 * scale, 2 * scale, 0.7 * scale);
-
-    // --- ARMS & WEAPON ---
-    const armY = -13 * scale;
-    let armAngle = 0;
-    if (this.isWalking && !this.isJumping) {
-      armAngle = (this.walkFrame === 1 ? 0.3 : (this.walkFrame === 3 ? -0.3 : 0));
-    }
-
-    ctx.save();
-    ctx.translate(0, armY);
-    ctx.rotate(armAngle);
-
-    // Arm (sleeve + skin hand)
-    ctx.fillStyle = '#f0ede6';
-    ctx.fillRect(1 * scale, 0, 3 * scale, 4 * scale);
-    ctx.fillStyle = '#ffd3a1'; // hand
-    ctx.fillRect(2 * scale, 3 * scale, 2.5 * scale, 2.5 * scale);
-
-    // WEAPON IN HAND
-    if (this.equippedWeapon === 'sword') {
-      // Terraria Silver Broadsword
-      // Hilt (gold)
-      ctx.fillStyle = '#ffd24a';
-      ctx.fillRect(3 * scale, 2 * scale, 1.5 * scale, 4 * scale);
-      // Crossguard
-      ctx.fillRect(2 * scale, 2 * scale, 4 * scale, 1.2 * scale);
-      // Blade (gleaming steel with cyan glint)
-      ctx.fillStyle = '#e8f4f8';
-      ctx.fillRect(4.5 * scale, -8 * scale, 2 * scale, 11 * scale);
-      ctx.fillStyle = '#9fd2e8'; // inner fuller
-      ctx.fillRect(5 * scale, -7 * scale, 1 * scale, 9 * scale);
-      // Sword tip
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(5 * scale, -9 * scale, 1.5 * scale, 1.5 * scale);
-    } else {
-      // Terraria Gold Pickaxe
-      // Handle (brown wood)
-      ctx.fillStyle = '#78471f';
-      ctx.fillRect(2.5 * scale, -5 * scale, 1.5 * scale, 10 * scale);
-      // Golden pickaxe head
-      ctx.fillStyle = '#ffd24a';
-      ctx.fillRect(0, -7 * scale, 6 * scale, 2.5 * scale);
-      ctx.fillRect(-1.5 * scale, -6 * scale, 2 * scale, 2 * scale);
-      ctx.fillRect(5 * scale, -6 * scale, 2 * scale, 2 * scale);
-      // Sharp metallic tips
-      ctx.fillStyle = '#fff4a3';
-      ctx.fillRect(-2 * scale, -5 * scale, 1 * scale, 1.5 * scale);
-      ctx.fillRect(6.5 * scale, -5 * scale, 1 * scale, 1.5 * scale);
+      // Fallback simple pixel character
+      this.drawFallbackCharacter(ctx, scale);
     }
 
     ctx.restore();
 
-    ctx.restore(); // restore facing transform
-
-    // --- EMOTE SPEECH BUBBLE ---
-    if (this.emoteText && this.emoteTimer > 0) {
+    // Draw interaction UI
+    if (this.emoteTimer > 0 && this.emoteText) {
       this.drawEmoteBubble(ctx, px, py - 30 * scale);
+    }
+  }
+
+  private drawFallbackCharacter(ctx: CanvasRenderingContext2D, scale: number): void {
+    const bobY = this.isWalking ? Math.abs(Math.sin(this.walkTimer * 0.2)) * 2 : 0;
+
+    ctx.translate(0, -bobY);
+
+    // Back arm
+    ctx.fillStyle = '#e5a570'; // Skin tone
+    ctx.fillRect(-1 * scale, -14 * scale, 4 * scale, 10 * scale);
+
+    // Legs
+    ctx.fillStyle = '#4c3f2d'; // Brown pants
+    const legSwing = this.isWalking ? Math.sin(this.walkTimer * 0.3) * 4 : 0;
+    ctx.fillRect((-4 + legSwing) * scale, -10 * scale, 4 * scale, 10 * scale); // back leg
+    ctx.fillRect((-2 - legSwing) * scale, -10 * scale, 4 * scale, 10 * scale); // front leg
+
+    // Body (Green tunic)
+    ctx.fillStyle = '#3fa535';
+    ctx.fillRect(-5 * scale, -18 * scale, 10 * scale, 12 * scale);
+    // Belt
+    ctx.fillStyle = '#553b1b';
+    ctx.fillRect(-5 * scale, -9 * scale, 10 * scale, 2 * scale);
+    // Buckle
+    ctx.fillStyle = '#d8b941';
+    ctx.fillRect(-2 * scale, -9 * scale, 4 * scale, 2 * scale);
+
+    // Head
+    ctx.fillStyle = '#e5a570';
+    ctx.fillRect(-5 * scale, -28 * scale, 10 * scale, 10 * scale);
+
+    // Eyes
+    ctx.fillStyle = '#111';
+    if (!this.isBlinking) { ctx.fillRect(1 * scale, -26 * scale, 2 * scale, 2 * scale); }
+
+    // Hair / Hat
+    ctx.fillStyle = '#26571b'; // Green cap
+    ctx.fillRect(-6 * scale, -30 * scale, 12 * scale, 4 * scale);
+    ctx.fillRect(-6 * scale, -28 * scale, 4 * scale, 4 * scale); // side flap
+
+    // Front arm
+    const armSwing = this.isWalking ? Math.sin(this.walkTimer * 0.3) * -4 : 0;
+    ctx.fillStyle = '#3fa535'; // sleeve
+    ctx.fillRect((-3 + armSwing) * scale, -18 * scale, 4 * scale, 6 * scale);
+    ctx.fillStyle = '#e5a570'; // hand
+    ctx.fillRect((-3 + armSwing) * scale, -12 * scale, 4 * scale, 4 * scale);
+
+    // Draw weapon
+    if (this.equippedWeapon === 'sword') {
+      ctx.fillStyle = '#949494';
+      ctx.fillRect((-2 + armSwing) * scale, -26 * scale, 2 * scale, 14 * scale);
+      ctx.fillStyle = '#6e502a'; // hilt
+      ctx.fillRect((-4 + armSwing) * scale, -14 * scale, 6 * scale, 2 * scale);
+    } else if (this.equippedWeapon === 'pickaxe') {
+      ctx.fillStyle = '#6e502a'; // handle
+      ctx.fillRect((-2 + armSwing) * scale, -22 * scale, 2 * scale, 10 * scale);
+      ctx.fillStyle = '#949494'; // head
+      ctx.fillRect((-6 + armSwing) * scale, -24 * scale, 10 * scale, 2 * scale);
+      ctx.fillRect((-6 + armSwing) * scale, -22 * scale, 2 * scale, 2 * scale);
+      ctx.fillRect((2 + armSwing) * scale, -22 * scale, 2 * scale, 2 * scale);
     }
   }
 

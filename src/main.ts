@@ -346,33 +346,9 @@ function setupInteractions(): void {
   });
 
   // Scroll Depth Meter & Active Hotbar
-  const sections = ['section-hero', 'section-about', 'section-skills', 'section-projects', 'section-contact'];
-  const depthNames = ['Surface (120ft)', 'Guide\'s House (350ft)', 'Underground Inventory (980ft)', 'The Caverns (1,650ft)', 'The Underworld (3,100ft)'];
-  const depthMeter = document.querySelector('.depth-meter');
 
-  window.addEventListener('scroll', () => {
-    let currentIdx = 0;
-    for (let i = 0; i < sections.length; i++) {
-      const el = document.getElementById(sections[i]);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.5) {
-          currentIdx = i;
-        }
-      }
-    }
 
-    if (depthMeter) {
-      depthMeter.textContent = `Depth: ${depthNames[currentIdx]}`;
-    }
-
-    // Update active hotbar slot if navigation matches sections 0-4
-    if (currentIdx < 5) {
-      hotbarSlots.forEach((s, idx) => {
-        if (idx < 5) s.classList.toggle('active', idx === currentIdx);
-      });
-    }
-  });
+  // Removed scroll-based depth meter since we are using a static dashboard layout.
 
   // Back to Surface Button
   const backToTop = document.getElementById('btn-back-to-top');
@@ -422,15 +398,15 @@ function selectHotbarSlot(idx: number): void {
 
   // Slot actions
   if (idx === 0) {
-    document.getElementById('section-hero')?.scrollIntoView({ behavior: 'smooth' });
+    /* Scroll removed for static dashboard */
   } else if (idx === 1) {
-    document.getElementById('section-about')?.scrollIntoView({ behavior: 'smooth' });
+    /* Scroll removed for static dashboard */
   } else if (idx === 2) {
-    document.getElementById('section-skills')?.scrollIntoView({ behavior: 'smooth' });
+    /* Scroll removed for static dashboard */
   } else if (idx === 3) {
-    document.getElementById('section-projects')?.scrollIntoView({ behavior: 'smooth' });
+    /* Scroll removed for static dashboard */
   } else if (idx === 4) {
-    document.getElementById('section-contact')?.scrollIntoView({ behavior: 'smooth' });
+    /* Scroll removed for static dashboard */
   } else if (idx === 5) {
     // Slot 6: Toggle Weapon
     player.toggleWeapon();

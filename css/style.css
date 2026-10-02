@@ -1001,3 +1001,140 @@ main {
     scroll-behavior: auto !important;
   }
 }
+
+/* Dashboard Layout Overrides */
+html, body {
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#dashboard-container {
+  display: grid;
+  grid-template-columns: 280px 1fr 340px;
+  width: 100vw;
+  height: 100vh;
+  padding-top: 70px; /* Space for the HUD top */
+  padding-bottom: 90px; /* Space for Hotbar */
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+.dashboard-panel {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100%;
+  padding: 1rem;
+  background: var(--panel-bg);
+  border: 4px solid var(--panel-border);
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 255, 255, 0.25),
+    inset -2px -2px 0 rgba(0, 0, 0, 0.6),
+    4px 4px 0 #000;
+  border-radius: 4px;
+}
+
+.dashboard-panel::-webkit-scrollbar {
+  width: 8px;
+}
+.dashboard-panel::-webkit-scrollbar-track {
+  background: #131938;
+}
+.dashboard-panel::-webkit-scrollbar-thumb {
+  background: #2d418a;
+  border: 1px solid #080c1f;
+}
+
+.dashboard-center {
+  position: relative;
+  height: 100%;
+  border: 4px solid var(--panel-border);
+  border-radius: 4px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(92, 179, 247, 0.25) 0%, rgba(186, 227, 255, 0.2) 65%, rgba(58, 117, 52, 0.6) 98%, var(--dirt) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adjust Canvas position inside the relative dashboard-center parent */
+#game-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Smooth pulseGlow Animations */
+@keyframes pulseGlow {
+  0% { transform: scale(1); box-shadow: 0 0 4px var(--gold); }
+  50% { transform: scale(1.03); box-shadow: 0 0 14px var(--gold); }
+  100% { transform: scale(1); box-shadow: 0 0 4px var(--gold); }
+}
+
+.slot {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s, border-color 0.2s;
+}
+
+.slot:hover {
+  animation: pulseGlow 1.2s infinite ease-in-out;
+  border-color: var(--slot-hover);
+  z-index: 10;
+}
+
+.chest-item {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s, border-color 0.2s;
+}
+
+.chest-item:hover {
+  animation: pulseGlow 1.2s infinite ease-in-out;
+  border-color: var(--gold);
+}
+
+.cave-path-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 1rem;
+}
+
+.chat-container {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+/* Hide old sections */
+.depth-section, .cavern-subtext {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  #dashboard-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 50vh auto;
+    overflow-y: auto;
+    height: auto;
+  }
+  html, body {
+    overflow-y: auto;
+    height: auto;
+  }
+}
+
+/* Fix HUD overlap with left panel */
+.hud-top-left {
+  z-index: 1000;
+}
+.hud-top-right {
+  z-index: 1000;
+}
+#dashboard-container {
+  padding-top: 80px;
+}

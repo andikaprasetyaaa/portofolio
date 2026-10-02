@@ -1,5 +1,7 @@
 import { TerrariaPlayer } from './character.js';
 import { Particle } from './types.js';
+import { ImageAssets, initAssets } from './assets.js';
+
 
 let canvas: HTMLCanvasElement | null = null;
 let ctx: CanvasRenderingContext2D | null = null;
@@ -68,6 +70,7 @@ const clouds: Array<{ x: number; y: number; speed: number; scale: number }> = [
 ];
 
 export function initCanvas(): void {
+  initAssets();
   canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
   if (!canvas) return;
 
@@ -160,8 +163,9 @@ export function initCanvas(): void {
 
 function resize(): void {
   if (!canvas || !ctx) return;
-  width = window.innerWidth;
-  height = window.innerHeight;
+  const parent = canvas.parentElement;
+  width = parent ? parent.clientWidth : window.innerWidth;
+  height = parent ? parent.clientHeight : window.innerHeight;
   canvas.width = width;
   canvas.height = height;
   ctx.imageSmoothingEnabled = false;
@@ -250,67 +254,29 @@ function drawTerrariaCelestial(isNight: boolean): void {
   ctx.translate(sunX, sunY);
 
   if (!isNight) {
-    // Rotating radiant sun rays
-    ctx.save();
-    ctx.rotate(frameCount * 0.008);
-    ctx.fillStyle = '#ffd24a';
-    for (let i = 0; i < 8; i++) {
-      ctx.rotate((Math.PI * 2) / 8);
-      ctx.fillRect(-4, -42, 8, 12);
-      ctx.fillRect(-2, -48, 4, 6);
+    if (ImageAssets['sun'] && ImageAssets['sun'].complete && ImageAssets['sun'].naturalWidth !== 0) {
+      // Gentle rotation for the sun
+      ctx.rotate(frameCount * 0.002);
+      ctx.drawImage(ImageAssets['sun'], -60, -60, 120, 120);
+    } else {
+      ctx.fillStyle = '#ffd24a';
+      ctx.beginPath();
+      ctx.arc(0, 0, 30, 0, Math.PI * 2);
+      ctx.fill();
     }
-    ctx.restore();
-
-    // Terraria Golden Smiling Sun Body
-    ctx.fillStyle = '#ffd24a';
-    ctx.fillRect(-26, -26, 52, 52);
-    ctx.fillStyle = '#ffb300'; // border shade
-    ctx.fillRect(-28, -22, 2, 44);
-    ctx.fillRect(26, -22, 2, 44);
-    ctx.fillRect(-22, -28, 44, 2);
-    ctx.fillRect(-22, 26, 44, 2);
-
-    // Cute Sunglasses / Smiling face
-    ctx.fillStyle = '#1c1b18';
-    // Sunglasses frame
-    ctx.fillRect(-16, -8, 12, 8);
-    ctx.fillRect(4, -8, 12, 8);
-    ctx.fillRect(-4, -6, 8, 3);
-    // Lens reflection
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(-14, -6, 3, 3);
-    ctx.fillRect(6, -6, 3, 3);
-    // Smile
-    ctx.fillStyle = '#bd5e00';
-    ctx.fillRect(-10, 8, 20, 3);
-    ctx.fillRect(-12, 6, 2, 3);
-    ctx.fillRect(10, 6, 2, 3);
   } else {
-    // Crescent Moon
-    ctx.fillStyle = '#e8eff7';
-    ctx.beginPath();
-    ctx.arc(0, 0, 26, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.fillStyle = '#0a0f2e';
-    ctx.beginPath();
-    ctx.arc(10, -5, 24, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Twinkling stars
-    ctx.fillStyle = '#ffffff';
-    for (let i = 0; i < 6; i++) {
-      const sx = Math.sin(i * 1.5) * 60;
-      const sy = Math.cos(i * 2.1) * 45;
-      const sparkle = (frameCount + i * 20) % 60 > 30 ? 3 : 1.5;
-      ctx.fillRect(sx, sy, sparkle, sparkle);
+    if (ImageAssets['moon'] && ImageAssets['moon'].complete && ImageAssets['moon'].naturalWidth !== 0) {
+      ctx.drawImage(ImageAssets['moon'], -40, -40, 80, 80);
+    } else {
+      ctx.fillStyle = '#e8e8e8';
+      ctx.beginPath();
+      ctx.arc(0, 0, 24, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
-
   ctx.restore();
 }
 
-// --- HANGING VINES & FLOATING ISLAND TERRAIN ---
 function drawTerrariaTerrainAccents(): void {
   if (!ctx) return;
 
@@ -358,7 +324,6 @@ function updateAndDrawEyeOfCthulhu(): void {
   const c = ctx;
   if (!c) return;
 
-  // Gentle hovering floating oscillation
   const hoverX = Math.sin(frameCount * 0.02) * 25;
   const hoverY = Math.cos(frameCount * 0.025) * 18;
   eyeOfCthulhu.x = eyeOfCthulhu.baseX + hoverX;
@@ -368,82 +333,47 @@ function updateAndDrawEyeOfCthulhu(): void {
   const ey = Math.round(eyeOfCthulhu.y);
   const r = eyeOfCthulhu.radius;
 
-  // Pupil tracks mouse or player
   const angleToTarget = Math.atan2(mouseY - ey, mouseX - ex);
-  const pupilDist = 12;
-  const pupilX = Math.cos(angleToTarget) * pupilDist;
-  const pupilY = Math.sin(angleToTarget) * pupilDist;
 
   c.save();
   c.translate(ex, ey);
 
-  // 1. Trailing red muscle tendrils behind the eye
-  eyeOfCthulhu.tendrils.forEach((t, i) => {
-    const wave = Math.sin(frameCount * 0.08 + t.phase) * 8;
-    c.fillStyle = '#a61c1c';
+  // Rotate Eye towards target slightly
+  c.rotate(angleToTarget + Math.PI);
+
+  if (ImageAssets['eye'] && ImageAssets['eye'].complete && ImageAssets['eye'].naturalWidth !== 0) {
+    c.drawImage(ImageAssets['eye'], -50, -35, 100, 70);
+  } else {
+    // Eyeball fallback
+    c.fillStyle = '#1c1b18';
     c.beginPath();
-    c.moveTo(r * 0.7, t.offset);
-    c.quadraticCurveTo(r * 0.7 + 25 + wave, t.offset + (i - 2) * 5, r * 0.7 + 45 + wave * 1.5, t.offset * 1.4);
-    c.lineTo(r * 0.7 + 35 + wave, t.offset + 4);
-    c.closePath();
+    c.arc(0, 0, r + 2, 0, Math.PI * 2);
     c.fill();
-  });
+    c.fillStyle = '#edece8';
+    c.beginPath();
+    c.arc(0, 0, r, 0, Math.PI * 2);
+    c.fill();
 
-  // 2. Eyeball body (Terraria Pixel Eyeball)
-  c.fillStyle = '#1c1b18'; // outer dark border
-  c.beginPath();
-  c.arc(0, 0, r + 2, 0, Math.PI * 2);
-  c.fill();
-
-  c.fillStyle = '#edece8'; // Sclera white
-  c.beginPath();
-  c.arc(0, 0, r, 0, Math.PI * 2);
-  c.fill();
-
-  // 3. Bloodshot red veins radiating from back to front
-  c.strokeStyle = '#c92222';
-  c.lineWidth = 2;
-  c.beginPath();
-  // Vein 1
-  c.moveTo(r * 0.8, -12);
-  c.lineTo(r * 0.3, -15);
-  c.lineTo(0, -10);
-  // Vein 2
-  c.moveTo(r * 0.8, 10);
-  c.lineTo(r * 0.4, 14);
-  c.lineTo(0, 8);
-  // Vein 3
-  c.moveTo(r * 0.7, 0);
-  c.lineTo(r * 0.2, 2);
-  c.stroke();
-
-  // 4. Iris (Terraria Blue Iris)
-  c.fillStyle = '#1e5fad';
-  c.beginPath();
-  c.arc(pupilX, pupilY, 15, 0, Math.PI * 2);
-  c.fill();
-  c.fillStyle = '#429bf5'; // light blue ring
-  c.beginPath();
-  c.arc(pupilX, pupilY, 12, 0, Math.PI * 2);
-  c.fill();
-
-  // 5. Pupil (Deep black with glint)
-  c.fillStyle = '#080808';
-  c.beginPath();
-  c.arc(pupilX, pupilY, 8, 0, Math.PI * 2);
-  c.fill();
-
-  // White eye glint reflection
-  c.fillStyle = '#ffffff';
-  c.fillRect(pupilX - 5, pupilY - 5, 4, 4);
+    // Pupil
+    const pupilDist = 12;
+    const pupilX = Math.cos(Math.PI) * pupilDist;
+    const pupilY = Math.sin(Math.PI) * pupilDist;
+    c.fillStyle = '#7a1926';
+    c.beginPath();
+    c.arc(pupilX, pupilY, r * 0.45, 0, Math.PI * 2);
+    c.fill();
+    c.fillStyle = '#111';
+    c.beginPath();
+    c.arc(pupilX, pupilY, r * 0.25, 0, Math.PI * 2);
+    c.fill();
+  }
 
   c.restore();
 }
 
-// --- CRITTERS: BLUE SLIME & BUNNY ---
 function updateAndDrawCritters(): void {
   if (!ctx) return;
-  const ground = height * 0.78;
+  const ground = height * 0.95;
 
   // 1. BLUE SLIME
   slime.jumpTimer++;
@@ -466,30 +396,32 @@ function updateAndDrawCritters(): void {
     }
   }
 
-  // Draw Slime
   ctx.save();
-  ctx.translate(Math.round(slime.x), Math.round(slime.y));
-  const isJumping = !slime.onGround;
-  const sw = isJumping ? 22 : 30;
-  const sh = isJumping ? 26 : 18;
+  ctx.translate(slime.x, slime.y);
+  // Slime squish effect based on vertical velocity
+  const squishY = slime.onGround ? 1 : Math.max(0.7, 1 - Math.abs(slime.vy) * 0.05);
+  const squishX = slime.onGround ? 1 : Math.min(1.3, 1 + Math.abs(slime.vy) * 0.03);
+  ctx.scale(squishX, squishY);
 
-  // Gel body
-  ctx.fillStyle = 'rgba(0, 140, 255, 0.85)';
-  ctx.fillRect(-sw / 2, -sh, sw, sh);
-  // Darker bottom gel
-  ctx.fillStyle = 'rgba(0, 90, 200, 0.9)';
-  ctx.fillRect(-sw / 2, -sh * 0.4, sw, sh * 0.4);
-  // Specular gleam
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-  ctx.fillRect(-sw / 2 + 3, -sh + 3, 5, 4);
+  if (ImageAssets['slime'] && ImageAssets['slime'].complete && ImageAssets['slime'].naturalWidth !== 0) {
+    ctx.drawImage(ImageAssets['slime'], -16, -24, 32, 24);
+  } else {
+    ctx.fillStyle = 'rgba(0, 110, 255, 0.7)';
+    ctx.beginPath();
+    ctx.arc(0, -10, 12, Math.PI, 0);
+    ctx.lineTo(14, 0);
+    ctx.lineTo(-14, 0);
+    ctx.closePath();
+    ctx.fill();
+  }
   ctx.restore();
 
-  // 2. TERRARIA BUNNY
+  // 2. BUNNY
   bunny.hopTimer++;
-  if (bunny.hopTimer > 180 && bunny.onGround) {
-    bunny.vy = -5.5;
-    bunny.facing = Math.random() > 0.5 ? 1 : -1;
-    bunny.vx = bunny.facing * 1.5;
+  if (bunny.hopTimer > 200 && bunny.onGround) {
+    bunny.vy = -5;
+    bunny.vx = (Math.random() > 0.5 ? 1.8 : -1.8) * 1.5;
+    bunny.facing = bunny.vx > 0 ? 1 : -1;
     bunny.onGround = false;
     bunny.hopTimer = 0;
   }
@@ -497,7 +429,7 @@ function updateAndDrawCritters(): void {
   if (!bunny.onGround) {
     bunny.x += bunny.vx;
     bunny.y += bunny.vy;
-    bunny.vy += 0.35;
+    bunny.vy += 0.4;
     if (bunny.y >= ground) {
       bunny.y = ground;
       bunny.vy = 0;
@@ -506,32 +438,31 @@ function updateAndDrawCritters(): void {
     }
   }
 
-  // Draw Bunny
+  // Wrap around
+  if (bunny.x > width + 50) bunny.x = -50;
+  if (bunny.x < -50) bunny.x = width + 50;
+  if (slime.x > width + 50) slime.x = -50;
+  if (slime.x < -50) slime.x = width + 50;
+
   ctx.save();
-  ctx.translate(Math.round(bunny.x), Math.round(bunny.y));
-  ctx.scale(bunny.facing, 1);
+  ctx.translate(bunny.x, bunny.y);
+  if (bunny.facing === -1) {
+    ctx.scale(-1, 1);
+  }
 
-  // White fluffy body
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(-8, -12, 16, 12);
-  // Head
-  ctx.fillRect(4, -18, 10, 10);
-  // Inner Pink Ear
-  ctx.fillStyle = '#ffb3c6';
-  ctx.fillRect(6, -24, 3, 8);
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(9, -24, 3, 8);
-  // Eye
-  ctx.fillStyle = '#1c1b18';
-  ctx.fillRect(10, -15, 2, 2);
-  // Tail
-  ctx.fillStyle = '#e8e8e8';
-  ctx.fillRect(-11, -10, 4, 5);
-
+  if (ImageAssets['bunny'] && ImageAssets['bunny'].complete && ImageAssets['bunny'].naturalWidth !== 0) {
+    // hop animation frame approximation
+    const squish = !bunny.onGround ? 0.9 : 1.0;
+    ctx.scale(1, squish);
+    ctx.drawImage(ImageAssets['bunny'], -16, -24, 32, 24);
+  } else {
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(-8, -12, 16, 12); // body
+    ctx.fillRect(4, -18, 4, 8); // ear
+  }
   ctx.restore();
 }
 
-// --- BIOME PARTICLES ---
 function spawnBiomeParticles(scrollY: number): void {
   const depth = scrollY / (height || 1);
   const maxParticles = width > 768 ? 60 : 30;
