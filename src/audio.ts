@@ -41,13 +41,52 @@ export function setVolume(val: number): void {
 
 export function setDayNightMusic(day: boolean): void {
     isDay = day;
-    if (isMusicPlaying) {
+    if (isMusicPlaying && ensureAudioReady() && audioCtx) {
+        // Simple crossfade using element volumes
+        const fadeStep = 50; // ms
+        const fadeDuration = 1000; // 1s
+        const steps = fadeDuration / fadeStep;
+        let step = 0;
+
         if (isDay) {
-            nightAudio?.pause();
+            if (dayAudio) dayAudio.volume = 0;
             dayAudio?.play().catch(e => console.log("Audio play error", e));
+
+            const interval = setInterval(() => {
+                step++;
+                const ratio = step / steps;
+                if (dayAudio) dayAudio.volume = currentVolume * ratio;
+                if (nightAudio && nightAudio.volume > 0) nightAudio.volume = Math.max(0, currentVolume * (1 - ratio));
+
+                if (step >= steps) {
+                    clearInterval(interval);
+                    if (dayAudio) dayAudio.volume = currentVolume;
+                    if (nightAudio) {
+                        nightAudio.pause();
+                        nightAudio.volume = currentVolume; // Reset for next time
+                    }
+                }
+            }, fadeStep);
+
         } else {
-            dayAudio?.pause();
+            if (nightAudio) nightAudio.volume = 0;
             nightAudio?.play().catch(e => console.log("Audio play error", e));
+
+            const interval = setInterval(() => {
+                step++;
+                const ratio = step / steps;
+                if (nightAudio) nightAudio.volume = currentVolume * ratio;
+                if (dayAudio && dayAudio.volume > 0) dayAudio.volume = Math.max(0, currentVolume * (1 - ratio));
+
+                if (step >= steps) {
+                    clearInterval(interval);
+                    if (nightAudio) nightAudio.volume = currentVolume;
+                    if (dayAudio) {
+                        dayAudio.pause();
+                        dayAudio.volume = currentVolume; // Reset
+                    }
+                }
+            }, fadeStep);
         }
     }
 }

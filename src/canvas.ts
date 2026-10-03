@@ -342,7 +342,7 @@ function updateAndDrawEyeOfCthulhu(): void {
   c.rotate(angleToTarget + Math.PI);
 
   if (ImageAssets['eye'] && ImageAssets['eye'].complete && ImageAssets['eye'].naturalWidth !== 0) {
-    c.drawImage(ImageAssets['eye'], -50, -35, 100, 70);
+    c.drawImage(ImageAssets['eye'], -55, -76, 110, 152);
   } else {
     // Eyeball fallback
     c.fillStyle = '#1c1b18';
