@@ -40,8 +40,8 @@
   --rarity-cyan: #05c8ff;
   
   /* Fonts */
-  --font-pixel: 'Press Start 2P', monospace;
-  --font-terminal: 'VT323', monospace;
+  --font-pixel: 'Patrick Hand', 'Andy', cursive;
+  --font-terminal: 'Patrick Hand', 'Andy', cursive;
   
   /* Layout */
   --max-width: 1200px;
@@ -87,7 +87,7 @@ h1, h2, h3, h4, .pixel-font {
 }
 
 h2 { font-size: 1.4rem; margin-bottom: 1.2rem; }
-h3 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+h3 { font-size: 1.25rem; margin-bottom: 0.8rem; }
 
 .skip-link {
   position: absolute;
@@ -840,7 +840,7 @@ main {
 .site-footer {
   margin-top: 5rem;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   color: #ffd24a;
   display: flex;
   flex-direction: column;
@@ -914,7 +914,7 @@ main {
 .type-line {
   color: #9cb3d8;
   font-style: italic;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   margin-bottom: 0.6rem;
 }
 .desc-line {
@@ -988,7 +988,7 @@ main {
   .hud-top-right { right: 10px; }
   .logo-text { font-size: 2.2rem; }
   .hero-info h2 { font-size: 1.4rem; }
-  .hero-info h3 { font-size: 1.1rem; }
+  .hero-info h3 { font-size: 1.25rem; }
   .dialogue-box { flex-direction: column; align-items: center; text-align: center; }
   #dialogue-next { align-self: center; }
 }
@@ -1137,4 +1137,20 @@ html, body {
 }
 #dashboard-container {
   padding-top: 80px;
+}
+
+.slot-icon {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  margin-bottom: 2px;
+}
+
+.panel-icon-img {
+  width: 24px;
+  height: 24px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  margin-right: 8px;
 }

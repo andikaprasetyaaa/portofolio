@@ -14,7 +14,7 @@
     <!-- Retro Pixel Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/style.css">
@@ -61,52 +61,52 @@
         <nav class="hotbar" aria-label="Terraria Hotbar Navigation">
             <button class="slot active" data-slot="0" title="[1] Surface / Home">
                 <span class="slot-num">1</span>
-                <span class="slot-emoji">🏠</span>
+                <img src="images/workbench.png" class="slot-icon" alt="Home">
                 <span class="slot-tag">Home</span>
             </button>
             <button class="slot" data-slot="1" title="[2] Guide's House / About">
                 <span class="slot-num">2</span>
-                <span class="slot-emoji">🏡</span>
+                <img src="images/guide.png" class="slot-icon" alt="About">
                 <span class="slot-tag">About</span>
             </button>
             <button class="slot" data-slot="2" title="[3] Inventory / Skills">
                 <span class="slot-num">3</span>
-                <span class="slot-emoji">🎒</span>
+                <img src="images/chest.png" class="slot-icon" alt="Skills">
                 <span class="slot-tag">Skills</span>
             </button>
             <button class="slot" data-slot="3" title="[4] Caverns / Projects">
                 <span class="slot-num">4</span>
-                <span class="slot-emoji">💎</span>
+                <img src="images/life_crystal.png" class="slot-icon" alt="Projects">
                 <span class="slot-tag">Projects</span>
             </button>
             <button class="slot" data-slot="4" title="[5] The Underworld / Contact">
                 <span class="slot-num">5</span>
-                <span class="slot-emoji">🔥</span>
+                <img src="images/torch.png" class="slot-icon" alt="Contact">
                 <span class="slot-tag">Contact</span>
             </button>
             <button class="slot" data-slot="5" title="[6] Equip Weapon (Sword / Pickaxe)">
                 <span class="slot-num">6</span>
-                <span class="slot-emoji">⚔️</span>
+                <img src="images/copper_sword.png" class="slot-icon" alt="Weapon">
                 <span class="slot-tag">Weapon</span>
             </button>
             <button class="slot" data-slot="6" title="[7] Emote / Dialogue">
                 <span class="slot-num">7</span>
-                <span class="slot-emoji">💬</span>
+                <img src="images/slime.png" class="slot-icon" alt="Emote">
                 <span class="slot-tag">Emote</span>
             </button>
             <button class="slot" data-slot="7" title="[8] Toggle Day/Night">
                 <span class="slot-num">8</span>
-                <span class="slot-emoji">🌙</span>
+                <img src="images/moon.png" class="slot-icon" alt="Time">
                 <span class="slot-tag">Time</span>
             </button>
             <button class="slot" data-slot="8" title="[9] Terraria Soundtrack">
                 <span class="slot-num">9</span>
-                <span class="slot-emoji">🎵</span>
+                <img src="images/copper_coin.png" class="slot-icon" alt="Audio">
                 <span class="slot-tag">Audio</span>
             </button>
             <button class="slot" data-slot="9" title="[0] Surface">
                 <span class="slot-num">0</span>
-                <span class="slot-emoji">🔝</span>
+                <img src="images/hermes.png" class="slot-icon" alt="Top">
                 <span class="slot-tag">Surface</span>
             </button>
         </nav>
@@ -133,20 +133,20 @@
         <!-- LEFT PANEL (Stats/Skills) -->
         <div id="panel-left" class="dashboard-panel panel">
             <div class="panel-header">
-                <span class="panel-icon">⚔️</span>
+                <img src="images/nightsedge.png" class="panel-icon-img" alt="Equip">
                 <h3>Hero Equipment</h3>
             </div>
             <ul id="stat-list" class="pixel-list"></ul>
 
             <div class="panel-header" style="margin-top: 1.5rem;">
-                <span class="panel-icon">🎒</span>
+                <img src="images/chest.png" class="panel-icon-img" alt="Inventory">
                 <h3>Inventory</h3>
             </div>
             <div class="inventory-tabs">
                 <button class="tab-btn active" data-category="all">All Items</button>
-                <button class="tab-btn" data-category="AI/ML">🧠 AI/ML</button>
-                <button class="tab-btn" data-category="Data Engineering">📊 Data Eng</button>
-                <button class="tab-btn" data-category="Backend & DevOps">⚙️ Backend</button>
+                <button class="tab-btn" data-category="AI/ML"><img src="images/mana_crystal.png" style="width:16px;vertical-align:middle;margin-right:4px;" alt=""> AI/ML</button>
+                <button class="tab-btn" data-category="Data Engineering"><img src="images/anvil.png" style="width:16px;vertical-align:middle;margin-right:4px;" alt=""> Data Eng</button>
+                <button class="tab-btn" data-category="Backend & DevOps"><img src="images/furnace.png" style="width:16px;vertical-align:middle;margin-right:4px;" alt=""> Backend</button>
             </div>
             <div id="inventory-grid" class="inventory-grid"></div>
         </div>
@@ -195,7 +195,7 @@
             <div id="about-text-content" style="margin-top: 1.5rem;"></div>
             <div class="achievements-section mt-4">
                 <div class="panel-header">
-                    <span class="panel-icon">🏆</span>
+                    <img src="images/gold_coin.png" class="panel-icon-img" alt="Achievements">
                     <h3>Achievements</h3>
                 </div>
                 <div id="achievements-list" class="achievements-list"></div>
@@ -203,20 +203,20 @@
 
             <!-- Projects / Chests -->
             <div class="panel-header" style="margin-top: 1.5rem;">
-                <span class="panel-icon">💎</span>
+                <img src="images/life_crystal.png" class="panel-icon-img" alt="Caverns">
                 <h3>The Caverns</h3>
             </div>
             <div id="cave-path" class="cave-path-grid"></div>
 
             <!-- Contact -->
             <div class="panel-header" style="margin-top: 1.5rem;">
-                <span class="panel-icon">🔥</span>
+                <img src="images/torch.png" class="panel-icon-img" alt="Underworld">
                 <h3>Underworld (Contact)</h3>
             </div>
             <div id="contact-links" class="contact-links"></div>
             <div style="text-align: center; margin-top: 1rem;">
                 <a id="hire-btn" href="mailto:andika.prasetya@example.com" class="pixel-button primary cta-hire" style="font-size: 1rem !important; padding: 12px 18px !important;">
-                    ⚔️ Hire Andika ⚔️
+                    <img src="images/copper_sword.png" style="width:16px;vertical-align:middle;margin-right:4px;transform:rotate(-45deg);" alt=""> Hire Andika <img src="images/copper_sword.png" style="width:16px;vertical-align:middle;margin-left:4px;transform:rotate(135deg);" alt="">
                 </a>
             </div>
         </div>
@@ -226,13 +226,13 @@
     <div id="project-modal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content panel tooltip-style" role="dialog" aria-modal="true" aria-labelledby="modal-title">
             <button class="close-modal" aria-label="Close">✕</button>
-            <div class="modal-chest-icon">📦</div>
+            <div class="modal-chest-icon"><img src="images/chest.png" style="width:48px;" alt=""></div>
             <h3 id="modal-title" class="rarity-color">Project Title</h3>
             <p id="modal-subtitle" class="type-line">Subtitle</p>
             <p id="modal-desc" class="desc-line"></p>
             <div id="modal-tech" class="tech-tags"></div>
             <div class="modal-actions">
-                <a id="modal-github" href="#" target="_blank" rel="noopener noreferrer" class="pixel-button primary">⚔️ Open Repository</a>
+                <a id="modal-github" href="#" target="_blank" rel="noopener noreferrer" class="pixel-button primary"><img src="images/nightsedge.png" style="width:16px;vertical-align:middle;margin-right:4px;" alt=""> Open Repository</a>
             </div>
         </div>
     </div>

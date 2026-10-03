@@ -286,7 +286,7 @@ function renderContact(): void {
     linksContainer.innerHTML = '';
     const c = appData.contact;
     if (c.github && c.github !== 'REPLACE_ME') {
-      linksContainer.innerHTML += `<a href="${c.github}" target="_blank" rel="noopener noreferrer" class="pixel-button">GitHub ⚔️</a>`;
+      linksContainer.innerHTML += `<a href="${c.github}" target="_blank" rel="noopener noreferrer" class="pixel-button">GitHub</a>`;
     }
     if (c.linkedin && c.linkedin !== 'REPLACE_ME') {
       linksContainer.innerHTML += `<a href="${c.linkedin}" target="_blank" rel="noopener noreferrer" class="pixel-button">LinkedIn 🛡️</a>`;
@@ -396,34 +396,45 @@ function selectHotbarSlot(idx: number): void {
   hotbarSlots.forEach((s, i) => s.classList.toggle('active', i === idx));
   playItemSwitchSound();
 
-  // Slot actions
+  const leftPanel = document.getElementById('panel-left');
+  const rightPanel = document.getElementById('panel-right');
+
   if (idx === 0) {
-    /* Scroll removed for static dashboard */
-  } else if (idx === 1) {
-    /* Scroll removed for static dashboard */
-  } else if (idx === 2) {
-    /* Scroll removed for static dashboard */
-  } else if (idx === 3) {
-    /* Scroll removed for static dashboard */
-  } else if (idx === 4) {
-    /* Scroll removed for static dashboard */
+    if (leftPanel) leftPanel.scrollTo({ top: 0, behavior: 'smooth' });
+    if (rightPanel) rightPanel.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (idx === 1) { // About
+    if (rightPanel) {
+       const about = document.querySelector('.chat-container') as HTMLElement;
+       if (about) rightPanel.scrollTo({ top: about.offsetTop - 50, behavior: 'smooth' });
+    }
+  } else if (idx === 2) { // Skills
+    if (leftPanel) {
+       const skills = document.querySelector('.inventory-tabs') as HTMLElement;
+       if (skills) leftPanel.scrollTo({ top: skills.offsetTop - 50, behavior: 'smooth' });
+    }
+  } else if (idx === 3) { // Projects
+    if (rightPanel) {
+       const projects = document.getElementById('cave-path');
+       if (projects) rightPanel.scrollTo({ top: projects.offsetTop - 80, behavior: 'smooth' });
+    }
+  } else if (idx === 4) { // Contact
+    if (rightPanel) {
+       const contact = document.getElementById('contact-links');
+       if (contact) rightPanel.scrollTo({ top: contact.offsetTop - 80, behavior: 'smooth' });
+    }
   } else if (idx === 5) {
-    // Slot 6: Toggle Weapon
     player.toggleWeapon();
   } else if (idx === 6) {
-    // Slot 7: Trigger Emote
     player.triggerEmote();
   } else if (idx === 7) {
-    // Slot 8: Day / Night
     const toggleDayNight = document.getElementById('toggle-day-night');
     toggleDayNight?.click();
   } else if (idx === 8) {
-    // Slot 9: Toggle Music
     const toggleMusicBtn = document.getElementById('toggle-music');
     toggleMusicBtn?.click();
   } else if (idx === 9) {
-    // Slot 10: Recall Potion (Back to Top)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (leftPanel) leftPanel.scrollTo({ top: 0, behavior: 'smooth' });
+    if (rightPanel) rightPanel.scrollTo({ top: 0, behavior: 'smooth' });
     player.triggerEmote("🌀 Used Magic Mirror!");
   }
 }
