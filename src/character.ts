@@ -28,7 +28,7 @@ export class TerrariaPlayer {
   // Interaction
   public targetX: number | null = null;
   public equippedWeapon: 'sword' | 'pickaxe' = 'sword';
-  public emoteText: string | null = "⚔️ Ready to build AI!";
+  public emoteText: string | null = "Ready to build AI!";
   public emoteTimer: number = 240; // show at start
 
   // Dust particles from footsteps
@@ -61,14 +61,14 @@ export class TerrariaPlayer {
 
   public toggleWeapon(): void {
     this.equippedWeapon = this.equippedWeapon === 'sword' ? 'pickaxe' : 'sword';
-    this.triggerEmote(this.equippedWeapon === 'sword' ? "⚔️ Silver Broadsword" : "⛏️ Gold Pickaxe");
+    this.triggerEmote(this.equippedWeapon === 'sword' ? "Silver Broadsword" : "Gold Pickaxe");
   }
 
   public triggerEmote(text?: string): void {
     const defaultEmotes = [
-      "⚔️ Let's forge AI!",
+      "Let's forge AI!",
       "⛏️ Mining data...",
-      "🧠 IndoBERT entailing...",
+      "IndoBERT entailing...",
       "🥊 Combat sports mode!",
       "✨ Welcome traveler!",
       "🌿 Terraria vibes!"
@@ -310,7 +310,7 @@ export class TerrariaPlayer {
 
   private drawEmoteBubble(ctx: CanvasRenderingContext2D, x: number, y: number): void {
     ctx.save();
-    ctx.font = 'bold 12px "Press Start 2P", monospace';
+    ctx.font = '20px "Patrick Hand", "Andy", cursive';
     const textWidth = ctx.measureText(this.emoteText!).width;
     const padding = 10;
     const boxW = Math.max(120, textWidth + padding * 2);
