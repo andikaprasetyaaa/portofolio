@@ -1,23 +1,27 @@
 let audioCtx: AudioContext | null = null;
-let musicGainNode: GainNode | null = null;
 let sfxGainNode: GainNode | null = null;
-let isMusicPlaying = false;
 let currentVolume = 0.25;
-let musicTimer: number | null = null;
+let dayAudio: HTMLAudioElement | null = null;
+let nightAudio: HTMLAudioElement | null = null;
+let isMusicPlaying = false;
+let isDay = true;
 
 export function initAudio(): void {
   if (audioCtx) return;
   const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
   audioCtx = new AudioContextClass();
 
-  musicGainNode = audioCtx.createGain();
   sfxGainNode = audioCtx.createGain();
-
-  musicGainNode.gain.value = currentVolume;
   sfxGainNode.gain.value = currentVolume * 1.2;
-
-  musicGainNode.connect(audioCtx.destination);
   sfxGainNode.connect(audioCtx.destination);
+
+  dayAudio = new Audio('audio/day.mp3');
+  dayAudio.loop = true;
+  dayAudio.volume = currentVolume;
+
+  nightAudio = new Audio('audio/night.mp3');
+  nightAudio.loop = true;
+  nightAudio.volume = currentVolume;
 }
 
 function ensureAudioReady(): boolean {
@@ -30,8 +34,22 @@ function ensureAudioReady(): boolean {
 
 export function setVolume(val: number): void {
   currentVolume = Math.max(0, Math.min(1, val));
-  if (musicGainNode) musicGainNode.gain.value = currentVolume;
   if (sfxGainNode) sfxGainNode.gain.value = currentVolume * 1.2;
+  if (dayAudio) dayAudio.volume = currentVolume;
+  if (nightAudio) nightAudio.volume = currentVolume;
+}
+
+export function setDayNightMusic(day: boolean): void {
+    isDay = day;
+    if (isMusicPlaying) {
+        if (isDay) {
+            nightAudio?.pause();
+            dayAudio?.play().catch(e => console.log("Audio play error", e));
+        } else {
+            dayAudio?.pause();
+            nightAudio?.play().catch(e => console.log("Audio play error", e));
+        }
+    }
 }
 
 export function playClickSound(): void {
@@ -167,51 +185,6 @@ export function playCoinSound(): void {
   osc.stop(t + 0.22);
 }
 
-// Procedural Terraria daytime chiptune melody
-const melodyNotes = [
-  329.63, 392.00, 440.00, 523.25, 440.00, 392.00, 329.63, 293.66,
-  329.63, 392.00, 440.00, 587.33, 523.25, 440.00, 392.00, 329.63
-];
-let noteIndex = 0;
-
-function playMelodyStep(): void {
-  if (!isMusicPlaying || !audioCtx || !musicGainNode) return;
-
-  const freq = melodyNotes[noteIndex % melodyNotes.length];
-  noteIndex++;
-
-  const osc = audioCtx.createOscillator();
-  const noteGain = audioCtx.createGain();
-
-  osc.type = 'square';
-  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-  const vol = musicGainNode.gain.value * 0.18;
-  noteGain.gain.setValueAtTime(vol, audioCtx.currentTime);
-  noteGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
-
-  osc.connect(noteGain);
-  noteGain.connect(musicGainNode);
-
-  osc.start();
-  osc.stop(audioCtx.currentTime + 0.24);
-
-  // Bass note on every 4th step
-  if (noteIndex % 4 === 0) {
-    const bass = audioCtx.createOscillator();
-    const bassGain = audioCtx.createGain();
-    bass.type = 'triangle';
-    bass.frequency.setValueAtTime(freq / 2, audioCtx.currentTime);
-    bassGain.gain.setValueAtTime(vol * 1.2, audioCtx.currentTime);
-    bassGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-    bass.connect(bassGain);
-    bassGain.connect(musicGainNode);
-    bass.start();
-    bass.stop(audioCtx.currentTime + 0.36);
-  }
-
-  musicTimer = window.setTimeout(playMelodyStep, 260);
-}
 
 export function toggleMusic(forceState?: boolean): boolean {
   ensureAudioReady();
@@ -221,13 +194,14 @@ export function toggleMusic(forceState?: boolean): boolean {
   isMusicPlaying = targetState;
 
   if (isMusicPlaying) {
-    noteIndex = 0;
-    playMelodyStep();
-  } else {
-    if (musicTimer !== null) {
-      clearTimeout(musicTimer);
-      musicTimer = null;
+    if (isDay) {
+        dayAudio?.play().catch(e => console.log(e));
+    } else {
+        nightAudio?.play().catch(e => console.log(e));
     }
+  } else {
+    dayAudio?.pause();
+    nightAudio?.pause();
   }
 
   return isMusicPlaying;
