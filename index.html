@@ -129,9 +129,23 @@
     <!-- Canvas for Animated Terraria Sky, Eye of Cthulhu, Castle, Critters & Walking Player -->
 
 
-        <main id="dashboard-container">
-        <!-- LEFT PANEL (Stats/Skills) -->
-        <div id="panel-left" class="dashboard-panel panel">
+
+    <canvas id="game-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1;"></canvas>
+
+    <!-- Terraria floating UI container overlaying the canvas -->
+    <div id="ui-layer" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10; pointer-events: none;">
+
+        <!-- Center Title -->
+        <div class="hero-content" style="pointer-events: auto; position: absolute; top: 15vh; width: 100%; display: flex; justify-content: center;">
+            <div style="background: rgba(15, 20, 50, 0.85); padding: 20px; border: 4px solid #6b5c43; border-radius: 8px; text-align: center;">
+                <h1 class="logo-text" style="margin:0;">ANDIKA PRASETYA</h1>
+                <div class="logo-subtitle">AI & DATA ENGINEER • PORTFOLIO</div>
+                <h3 style="color: white; margin-top: 10px;">I forge AI systems — from raw data to deployed intelligence.</h3>
+            </div>
+        </div>
+
+        <!-- Left Floating Panel (Inventory/Skills) -->
+        <div id="panel-left" class="floating-panel ui-window" style="position: absolute; left: 20px; top: 100px; width: 320px; max-height: 80vh; pointer-events: auto; display: none;">
             <div class="panel-header">
                 <img src="images/nightsedge.png" class="panel-icon-img" alt="Equip">
                 <h3>Hero Equipment</h3>
@@ -151,34 +165,8 @@
             <div id="inventory-grid" class="inventory-grid"></div>
         </div>
 
-        <!-- CENTER PANEL (Canvas / Hero Area) -->
-        <div id="panel-center" class="dashboard-center">
-            <div class="parallax-layer far-hills"></div>
-            <div class="parallax-layer mid-trees"></div>
-            <div class="parallax-layer near-grass"></div>
-            
-            <canvas id="game-canvas"></canvas>
-
-            <div class="hero-content">
-                <div class="terraria-logo-wrapper">
-                    <div class="terraria-pixel-logo">
-                        <span class="logo-grass"></span>
-                        <h1 class="logo-text">ANDIKA PRASETYA</h1>
-                    </div>
-                    <div class="logo-subtitle">AI & DATA ENGINEER • PORTFOLIO</div>
-                </div>
-
-                <div class="hero-info">
-                    <h2 id="hero-name">I Putu Andika Prasetya</h2>
-                    <h3 id="hero-title">AI Engineer | Machine Learning & Data Engineer</h3>
-                    <p id="hero-tagline">I forge AI systems — from raw data to deployed intelligence.</p>
-                </div>
-            </div>
-            <div class="surface-grass-ledge"></div>
-        </div>
-
-        <!-- RIGHT PANEL (Projects / Chat) -->
-        <div id="panel-right" class="dashboard-panel panel">
+        <!-- Right Floating Panel (About/Projects/Contact) -->
+        <div id="panel-right" class="floating-panel ui-window" style="position: absolute; right: 20px; top: 100px; width: 380px; max-height: 80vh; pointer-events: auto; display: none;">
             <!-- Guide NPC Dialogue Box (Chat) -->
             <div class="chat-container">
                 <div class="npc-portrait" title="The Guide NPC">
@@ -220,7 +208,8 @@
                 </a>
             </div>
         </div>
-    </main>
+    </div>
+
     
     <!-- Terraria Project Modal Overlay -->
     <div id="project-modal" class="modal-overlay" aria-hidden="true">

@@ -213,21 +213,27 @@ export class TerrariaPlayer {
 
     if (ImageAssets['guide'] && ImageAssets['guide'].complete && ImageAssets['guide'].naturalWidth !== 0) {
       // Walking bobbing effect
-      const bobY = this.isWalking ? Math.abs(Math.sin(this.walkTimer * 0.2)) * 2 * scale : 0;
-      ctx.translate(0, -bobY);
+      const bobY = this.isWalking ? Math.abs(Math.sin(this.walkTimer * 0.3)) * 1.5 * scale : 0;
+      const leanAngle = this.isWalking ? Math.sin(this.walkTimer * 0.15) * 0.08 : 0;
 
-      // Draw guide sprite, centered horizontally, bottom aligned
-      ctx.drawImage(ImageAssets['guide'], -12 * scale, -24 * scale, 24 * scale, 24 * scale);
+      ctx.translate(0, -bobY);
+      ctx.rotate(leanAngle);
+
+      // The guide sprite natural size is 26x46
+      // Draw guide sprite, centered horizontally, bottom aligned so it touches y=0 (ground)
+      // The sprite will be 13 * scale wide and 23 * scale high
+      ctx.drawImage(ImageAssets['guide'], -6.5 * scale, -23 * scale, 13 * scale, 23 * scale);
 
       // Draw equipped weapon if any
       if (this.equippedWeapon === 'sword') {
         const attackAngle = this.isWalking ? Math.sin(this.walkTimer * 0.3) * 0.5 : 0;
         ctx.save();
-        ctx.translate(6 * scale, -10 * scale);
-        ctx.rotate(attackAngle + (Math.PI / 4));
+        // Adjust the pivot point to the character's hand (approx)
+        ctx.translate(2 * scale, -12 * scale);
+        ctx.rotate(attackAngle + (Math.PI / 6));
 
         if (ImageAssets['copper_sword'] && ImageAssets['copper_sword'].complete) {
-          ctx.drawImage(ImageAssets['copper_sword'], -6 * scale, -18 * scale, 12 * scale, 18 * scale);
+          ctx.drawImage(ImageAssets['copper_sword'], -2 * scale, -14 * scale, 16 * scale, 16 * scale);
         } else {
           ctx.fillStyle = '#8b6f47'; // Bronze
           ctx.fillRect(-2 * scale, -18 * scale, 4 * scale, 18 * scale);
