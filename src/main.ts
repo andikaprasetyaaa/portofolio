@@ -1,4 +1,4 @@
-import { initAudio, playClickSound, playItemSwitchSound, playChestOpenSound, playCoinSound, toggleMusic, setVolume } from './audio.js';
+import { initAudio, playClickSound, playItemSwitchSound, playChestOpenSound, playCoinSound, toggleMusic, setVolume, setDayNightMusic } from "./audio.js";
 import { initCanvas, player } from './canvas.js';
 import { PortfolioContent, Project, Skill } from './types.js';
 
@@ -368,6 +368,7 @@ function setupInteractions(): void {
       const next = current === 'night' ? 'light' : 'night';
       document.documentElement.setAttribute('data-theme', next);
       toggleDayNight.textContent = next === 'night' ? '☀️' : '🌙';
+      setDayNightMusic(next !== 'night');
     });
   }
 
